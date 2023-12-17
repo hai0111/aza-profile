@@ -13,11 +13,11 @@ export default function Home() {
   return (
     <main className="w-full max-w-[62ch] mx-auto text-justify pb-5 px-5">
       <FadeUp onAnimationStart={() => window.scrollTo({ top: 0 })}>
-        <Greeting />
+        <Overview />
       </FadeUp>
 
       <FadeUp duration={0.5} delay={0.2}>
-        <Overview />
+        <Greeting />
         <Work />
         <Bio />
         <Hobbies />

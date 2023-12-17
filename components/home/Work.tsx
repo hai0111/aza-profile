@@ -1,7 +1,7 @@
 import React from "react";
 
 const Work = () => (
-  <div className="mt-6">
+  <div className="mt-7">
     <h3 className="text-xl font-bold underline decoration-4 decoration-gray-500 underline-offset-4">
       Work
     </h3>

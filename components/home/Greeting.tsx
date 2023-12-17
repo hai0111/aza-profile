@@ -1,7 +1,9 @@
+import { motion } from "framer-motion";
+
 const Greeting = () => (
-  <div className="mt-6 backdrop-blur-sm bg-white bg-opacity-[0.4] dark:bg-opacity-[0.08] p-3 rounded-xl text-center">
+  <motion.div className="mt-6 backdrop-blur-sm bg-white bg-opacity-[0.4] dark:bg-opacity-[0.08] p-3 rounded-xl text-center">
     Hello, I&apos;m an website developer based in VietNam!
-  </div>
+  </motion.div>
 );
 
 export default Greeting;

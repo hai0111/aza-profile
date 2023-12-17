@@ -1,8 +1,10 @@
+"use client";
 import { ThemeContext } from "@/utils/theme";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext } from "react";
 import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
+import Button from "../Button";
 
 const ThemeToggleButton = () => {
   const { theme, toggle } = useContext(ThemeContext);
@@ -16,13 +18,15 @@ const ThemeToggleButton = () => {
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.2 }}
       >
-        <button
+        <Button
           aria-label="Toggle theme"
-          className="bg-purple-600 dark:bg-orange-400 text-white dark:text-black text-lg w-[40px] h-[40px] flex justify-center items-center rounded-lg"
-          onClick={toggle}
+          className="bg-purple-600 dark:bg-orange-400 text-white dark:text-black text-lg w-[40px]"
+          onClick={() => {
+            toggle();
+          }}
         >
           {theme === "light" ? <MdDarkMode /> : <CiLight />}
-        </button>
+        </Button>
       </motion.div>
     </AnimatePresence>
   );

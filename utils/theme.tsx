@@ -11,7 +11,7 @@ interface IThemeContext {
 }
 
 const initValue: IThemeContext = {
-  theme: "light",
+  theme: "dark",
   setTheme() {},
   toggle() {},
 };
@@ -19,7 +19,7 @@ const initValue: IThemeContext = {
 export const ThemeContext = createContext<IThemeContext>(initValue);
 
 const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<types>("light");
+  const [theme, setTheme] = useState<types>("dark");
   const data: IThemeContext = {
     theme,
     setTheme: (theme: types) => {

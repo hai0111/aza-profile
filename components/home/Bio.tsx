@@ -47,7 +47,7 @@ const Bio = () => (
             <td className="pr-5 py-2 text-start">
               <strong>{time}</strong>
             </td>
-            <td className="py-2">{content}</td>
+            <td className="py-2 text-start">{content}</td>
           </tr>
         ))}
       </tbody>

@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/components/Footer";
+import FadeUp from "@/components/animations/FadeUp";
 import Bio from "@/components/home/Bio";
 import Contact from "@/components/home/Contact";
 import Greeting from "@/components/home/Greeting";
@@ -8,22 +8,22 @@ import Hobbies from "@/components/home/Hobbies";
 import Overview from "@/components/home/Overview";
 import Website from "@/components/home/Website";
 import Work from "@/components/home/Work";
-import Navbar from "@/components/navbar";
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative pt-20">
-      <Navbar />
-      <main className="w-full max-w-[60ch] mx-auto text-justify pb-5">
+    <main className="w-full max-w-[62ch] mx-auto text-justify pb-5 px-5">
+      <FadeUp onAnimationStart={() => window.scrollTo({ top: 0 })}>
         <Greeting />
+      </FadeUp>
+
+      <FadeUp duration={0.5} delay={0.2}>
         <Overview />
         <Work />
         <Bio />
         <Hobbies />
         <Website />
-        <Contact />
-        <Footer />
-      </main>
-    </div>
+      </FadeUp>
+      <Contact />
+    </main>
   );
 }

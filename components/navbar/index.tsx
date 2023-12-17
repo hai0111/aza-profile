@@ -3,8 +3,9 @@
 import React, { ReactNode, useContext } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
-import { IoLogoGithub } from "react-icons/io5";
+import { IoLogoGithub, IoMenu } from "react-icons/io5";
 import ThemeToggleButton from "./ToggleTheme";
+import Button from "../Button";
 
 interface INavLink {
   text: string;
@@ -41,7 +42,7 @@ const Navbar = () => {
     <header className="flex justify-center backdrop-blur-md bg-white bg-opacity-25 dark:bg-transparent fixed top-0 left-0 right-0 z-10">
       <main className="flex items-center w-full max-w-[768px] p-2">
         <Logo />
-        <div className="inline-flex ml-5">
+        <div className="ml-5 hidden sm:inline-flex">
           {navLinks.map((item) => (
             <Link
               href={item.link}
@@ -57,6 +58,9 @@ const Navbar = () => {
         <div className="flex-1" />
 
         <ThemeToggleButton />
+        <Button className="w-[40px] border border-gray-200 ms-2">
+          <IoMenu />
+        </Button>
       </main>
     </header>
   );

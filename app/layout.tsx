@@ -16,10 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-light dark:bg-dark text-light dark:text-dark min-h-screen relative pt-20">
+      <body className="bg-light dark:bg-dark text-light dark:text-dark min-h-screen relative pt-20 flex flex-col">
         <ThemeProvider>
           <Navbar />
-          {children}
+          <main className="grow">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useContext } from "react";
 import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
-import Button from "../Button";
+import { Button } from "@nextui-org/react";
 
 const ThemeToggleButton = () => {
   const { theme, toggle } = useContext(ThemeContext);
@@ -20,7 +20,7 @@ const ThemeToggleButton = () => {
       >
         <Button
           aria-label="Toggle theme"
-          className="bg-purple-600 dark:bg-orange-400 text-white dark:text-black text-lg w-[40px]"
+          className="bg-purple-600 dark:bg-orange-400 text-white dark:text-black text-lg w-[40px] min-w-0 px-0"
           onClick={() => {
             toggle();
           }}

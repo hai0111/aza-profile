@@ -21,8 +21,8 @@ export default function Home() {
         <Work />
         <Bio />
         <Hobbies />
-        <Website />
       </FadeUp>
+      <Website />
       <Contact />
     </main>
   );

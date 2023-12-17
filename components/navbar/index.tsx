@@ -1,11 +1,22 @@
 "use client";
 
-import React, { ReactNode, useContext } from "react";
+import React, { ReactElement, ReactNode, useContext } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
 import { IoLogoGithub, IoMenu } from "react-icons/io5";
 import ThemeToggleButton from "./ToggleTheme";
-import Button from "../Button";
+
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Navbar,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from "@nextui-org/react";
 
 interface INavLink {
   text: string;
@@ -13,31 +24,31 @@ interface INavLink {
   icon?: ReactNode;
 }
 
-const Navbar = () => {
-  const navLinks: INavLink[] = [
-    {
-      link: "/works",
-      text: "Works",
-    },
-    {
-      link: "/wallpapers",
-      text: "Wallpapers",
-    },
-    {
-      link: "/posts",
-      text: "Posts",
-    },
-    {
-      link: "/uses",
-      text: "Uses",
-    },
-    {
-      link: "https://github.com/hai0111?tab=repositories",
-      text: "Sources",
-      icon: <IoLogoGithub />,
-    },
-  ];
+const navLinks: INavLink[] = [
+  {
+    link: "/works",
+    text: "Works",
+  },
+  {
+    link: "/wallpapers",
+    text: "Wallpapers",
+  },
+  {
+    link: "/posts",
+    text: "Posts",
+  },
+  {
+    link: "/uses",
+    text: "Uses",
+  },
+  {
+    link: "https://github.com/hai0111?tab=repositories",
+    text: "Sources",
+    icon: <IoLogoGithub />,
+  },
+];
 
+const NavbarHeader = () => {
   return (
     <header className="flex justify-center backdrop-blur-md bg-white bg-opacity-25 dark:bg-transparent fixed top-0 left-0 right-0 z-10">
       <main className="flex items-center w-full max-w-[768px] p-2">
@@ -58,12 +69,34 @@ const Navbar = () => {
         <div className="flex-1" />
 
         <ThemeToggleButton />
-        <Button className="w-[40px] border border-gray-200 ms-2">
-          <IoMenu />
-        </Button>
+
+        <Dropdown backdrop="blur">
+          <DropdownTrigger>
+            <Button
+              className="w-[40px] text-xl min-w-0 px-0 ms-2 sm:hidden"
+              variant="bordered"
+            >
+              <IoMenu />
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu aria-label="Dynamic Actions">
+            {navLinks.map((item) => (
+              <DropdownItem
+                textValue={item.text}
+                key={item.link}
+                href={item.link}
+              >
+                <span className="inline-flex items-center gap-1">
+                  {item.icon}
+                  {item.text}
+                </span>
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
       </main>
     </header>
   );
 };
 
-export default Navbar;
+export default NavbarHeader;

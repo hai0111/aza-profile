@@ -21,7 +21,7 @@ const Contact = () => {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col mt-5 gap-3 w-100 dark:text-light"
+          className="flex flex-col mt-5 gap-3 w-100"
         >
           <input
             type="email"

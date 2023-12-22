@@ -21,7 +21,7 @@ const initList: IDataDiary[] = [
 		time: '19/12/2023 17:03',
 		star: Math.random() > 0.5,
 		content:
-			'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis ut molestias dolores ducimus libero sequi cumque veritatis sint reiciendis neque.',
+			'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa Lorem  ipsum dolor sit amet consectetur, adipisicing elit. Debitis ut molestias dolores ducimus libero sequi cumque veritatis sint reiciendis neque.',
 	},
 	{
 		id: Math.random(),

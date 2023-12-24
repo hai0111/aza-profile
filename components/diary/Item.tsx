@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Button,
 	Dropdown,
@@ -13,6 +15,7 @@ import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
 import { IoMdClose } from 'react-icons/io'
 import { IoCheckmark } from 'react-icons/io5'
+import useDate from '@/utils/useDate'
 
 export interface IDataDiary {
 	id: number
@@ -64,10 +67,16 @@ const DiaryItem: FC<Props> = ({
 		saveData(data)
 	}
 
+	// Date controller
+
+	const { date, setDate, DatePicker } = useDate()
 	return (
 		<div className="group bg-white bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
-				<div className="text-xs">{diary.time}</div>
+				<div className="text-xs flex items-center">
+					<span className="me-1">{diary.time}</span>
+					<DatePicker />
+				</div>
 				{editable ? (
 					<div className="pe-3">
 						<Textarea

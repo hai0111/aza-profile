@@ -20,7 +20,7 @@ const useDate = () => {
 			children = (
 				<Button
 					isIconOnly
-					className="p-0 min-h-0 min-w-0 h-min w-min outline-none"
+					className="p-0 min-h-0 min-w-0 h-min w-min outline-none z-0"
 				>
 					<FcCalendar />
 				</Button>

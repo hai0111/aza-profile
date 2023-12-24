@@ -75,7 +75,7 @@ const DiaryItem: FC<Props> = ({
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
 					<span className="me-1">{diary.time}</span>
-					<DatePicker />
+					{editable && <DatePicker />}
 				</div>
 				{editable ? (
 					<div className="pe-3">

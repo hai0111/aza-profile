@@ -127,7 +127,7 @@ const DiaryItem: FC<Props> = ({
 							Sửa
 						</span>
 					</DropdownItem>
-					<DropdownItem textValue="Xóa">
+					<DropdownItem textValue="Xóa" onClick={() => openDelete(data.id)}>
 						<span className="inline-flex items-center gap-2">
 							<FaTrash />
 							Xóa

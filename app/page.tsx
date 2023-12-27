@@ -13,7 +13,7 @@ import Work from '@/components/home/Work'
 
 export default function Home() {
 	return (
-		<Container>
+		<Container className="relative z-10">
 			<FadeUp onAnimationStart={() => window.scrollTo({ top: 0 })}>
 				<Greeting />
 			</FadeUp>

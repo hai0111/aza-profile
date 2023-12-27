@@ -1,5 +1,6 @@
 'use client'
 
+import Animation3D from '@/components/Animation3D'
 import Container from '@/components/Container'
 import FadeUp from '@/components/animations/FadeUp'
 import Bio from '@/components/home/Bio'
@@ -13,12 +14,14 @@ import Work from '@/components/home/Work'
 export default function Home() {
 	return (
 		<Container>
+			<Animation3D />
+
 			<FadeUp onAnimationStart={() => window.scrollTo({ top: 0 })}>
-				<Overview />
+				<Greeting />
 			</FadeUp>
 
 			<FadeUp duration={0.5} delay={0.2}>
-				<Greeting />
+				<Overview />
 				<Work />
 				<Bio />
 				<Hobbies />

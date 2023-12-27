@@ -58,7 +58,7 @@ const Animation3D = () => {
 			'/3d/LittlestTokyo.glb',
 			function (gltf) {
 				const model = gltf.scene
-				model.position.set(1, 1, 0)
+				model.position.set(0.5, 1, 0)
 				model.scale.set(0.006, 0.006, 0.006)
 				scene.add(model)
 

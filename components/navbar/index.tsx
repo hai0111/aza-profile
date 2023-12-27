@@ -34,7 +34,7 @@ const navLinks: INavLink[] = [
 
 const NavbarHeader = () => {
 	return (
-		<header className="flex justify-center backdrop-blur-md bg-white bg-opacity-25 dark:bg-transparent fixed top-0 left-0 right-0 z-10">
+		<header className="flex justify-center backdrop-blur-md bg-white bg-opacity-25 dark:bg-transparent fixed top-0 left-0 right-0 z-20">
 			<main className="flex items-center w-full max-w-[768px] p-2">
 				<Logo />
 				<div className="ml-5 hidden sm:inline-flex">

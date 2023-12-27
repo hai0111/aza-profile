@@ -1,5 +1,6 @@
 'use client'
 
+import useDate from '@/utils/useDate'
 import {
 	Button,
 	Dropdown,
@@ -8,14 +9,13 @@ import {
 	DropdownTrigger,
 	Textarea,
 } from '@nextui-org/react'
-import { FC, memo, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import { FaTrash } from 'react-icons/fa6'
+import { IoMdClose } from 'react-icons/io'
+import { IoCheckmark } from 'react-icons/io5'
 import { MdEdit } from 'react-icons/md'
 import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
-import { IoMdClose } from 'react-icons/io'
-import { IoCheckmark } from 'react-icons/io5'
-import useDate from '@/utils/useDate'
 
 export interface IDataDiary {
 	id: number
@@ -68,14 +68,17 @@ const DiaryItem: FC<Props> = ({
 	}
 
 	// Date controller
+	const { DatePicker } = useDate(diary.time)
+	const onChangeDateTime = (val: string) => {
+		setDiary({ ...data, time: val })
+	}
 
-	const { date, setDate, DatePicker } = useDate()
 	return (
 		<div className="group bg-white bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
 					<span className="me-1">{diary.time}</span>
-					{editable && <DatePicker />}
+					{editable && <DatePicker onValueChange={onChangeDateTime} />}
 				</div>
 				{editable ? (
 					<div className="pe-3">

@@ -1,7 +1,9 @@
 'use client'
 
 import Container from '@/components/Container'
+import Add from '@/components/diary/Add'
 import DairyItem, { IDataDiary } from '@/components/diary/Item'
+import myAxios from '@/services/apiClient'
 import { ClientOnly } from '@/utils'
 import {
 	Button,
@@ -12,112 +14,27 @@ import {
 	ModalHeader,
 	useDisclosure,
 } from '@nextui-org/react'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import 'react-swipeable-list/dist/styles.css'
-
-const initList: IDataDiary[] = [
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content:
-			'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa Lorem  ipsum dolor sit amet consectetur, adipisicing elit. Debitis ut molestias dolores ducimus libero sequi cumque veritatis sint reiciendis neque.',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-	{
-		id: Math.random(),
-		time: '19/12/2023 17:03',
-		star: Math.random() > 0.5,
-		content: 'Không hiểu sao, kẹo sữa mikita lại được làm từ sữa',
-	},
-]
 
 const Diary = () => {
 	const [activeEditable, setActiveEditable] = useState<number | null>(null)
-	const [list, setList] = useState<IDataDiary[]>(initList)
+	const [list, setList] = useState<IDataDiary[]>([])
+
+	const getData = async () => {
+		try {
+			if (!list.length) {
+				const res = await myAxios.get('/api/diary')
+				setList(res.data)
+			}
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	useEffect(() => {
+		getData()
+	}, [])
 
 	const setActive = useCallback((id: number | null) => {
 		setActiveEditable(id)
@@ -152,8 +69,14 @@ const Diary = () => {
 		onClose()
 	}
 
+	// Handle Add
+
 	return (
 		<Container>
+			<div className="flex justify-center">
+				<Add />
+			</div>
+
 			<div className="flex flex-col gap-5">
 				<ClientOnly>
 					{list.map((item) => (

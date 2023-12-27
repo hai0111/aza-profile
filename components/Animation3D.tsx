@@ -60,7 +60,7 @@ const Animation3D = () => {
 			function (gltf) {
 				const model = gltf.scene
 				model.position.set(0.5, 1, 0)
-				model.scale.set(0.007, 0.007, 0.007)
+				model.scale.set(0.0065, 0.0065, 0.0065)
 				scene.add(model)
 
 				mixer = new THREE.AnimationMixer(model)

@@ -24,7 +24,7 @@ export default function RootLayout({
 				<ThemeProvider>
 					<Navbar />
 					<Animation3D />
-					<main className="grow">{children}</main>
+					<main className="grow relative z-10">{children}</main>
 					<Footer />
 				</ThemeProvider>
 			</body>

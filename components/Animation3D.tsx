@@ -25,8 +25,6 @@ const Animation3D = () => {
 		renderer.setPixelRatio(window.devicePixelRatio)
 		renderer.setSize(container.offsetWidth, container.offsetHeight)
 		renderer.setClearColor(0x000000, 0)
-		container.childNodes[0] && container.removeChild(container.childNodes[0])
-		container.appendChild(renderer.domElement)
 
 		const pmremGenerator = new THREE.PMREMGenerator(renderer)
 		const scene = new THREE.Scene()
@@ -66,6 +64,10 @@ const Animation3D = () => {
 				mixer = new THREE.AnimationMixer(model)
 				mixer.clipAction(gltf.animations[0]).play()
 
+				container.childNodes[0] &&
+					container.removeChild(container.childNodes[0])
+				container.appendChild(renderer.domElement)
+
 				animate()
 			},
 			undefined,
@@ -94,9 +96,11 @@ const Animation3D = () => {
 		}
 
 		return () => {
-			cancelAnimationFrame(req)
-			container.removeChild(renderer.domElement)
-			window.removeEventListener('resize', handleResize)
+			try {
+				cancelAnimationFrame(req)
+				window.removeEventListener('resize', handleResize)
+				container.removeChild(renderer.domElement)
+			} catch (err) {}
 		}
 	}, [refContainer])
 

@@ -18,8 +18,8 @@ import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
 
 export interface IDataDiary {
-	id: number
-	time: string
+	_id: number
+	day: string
 	star: boolean
 	content: string
 }
@@ -68,16 +68,16 @@ const DiaryItem: FC<Props> = ({
 	}
 
 	// Date controller
-	const { DatePicker } = useDate(diary.time)
+	const { DatePicker } = useDate(diary.day)
 	const onChangeDateTime = (val: string) => {
-		setDiary({ ...data, time: val })
+		setDiary({ ...data, day: val })
 	}
 
 	return (
 		<div className="group bg-white bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
-					<span className="me-1">{diary.time}</span>
+					<span className="me-1">{diary.day}</span>
 					{editable && <DatePicker onValueChange={onChangeDateTime} />}
 				</div>
 				{editable ? (
@@ -133,13 +133,13 @@ const DiaryItem: FC<Props> = ({
 					</Button>
 				</DropdownTrigger>
 				<DropdownMenu aria-label="Diary options">
-					<DropdownItem textValue="Sửa" onClick={() => setActive(data.id)}>
+					<DropdownItem textValue="Sửa" onClick={() => setActive(data._id)}>
 						<span className="inline-flex items-center gap-2">
 							<MdEdit />
 							Sửa
 						</span>
 					</DropdownItem>
-					<DropdownItem textValue="Xóa" onClick={() => openDelete(data.id)}>
+					<DropdownItem textValue="Xóa" onClick={() => openDelete(data._id)}>
 						<span className="inline-flex items-center gap-2">
 							<FaTrash />
 							Xóa
@@ -154,7 +154,7 @@ const DiaryItem: FC<Props> = ({
 					size="sm"
 					className="-translate-x-12 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 rounded-full text-[0.9rem]"
 					color="primary"
-					onClick={() => setActive(data.id)}
+					onClick={() => setActive(data._id)}
 				>
 					<MdEdit />
 				</Button>
@@ -163,7 +163,7 @@ const DiaryItem: FC<Props> = ({
 					size="sm"
 					className="-translate-x-12 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 delay-75 rounded-full text-[0.7rem]"
 					color="danger"
-					onClick={() => openDelete(data.id)}
+					onClick={() => openDelete(data._id)}
 				>
 					<FaTrash />
 				</Button>

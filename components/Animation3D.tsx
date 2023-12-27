@@ -102,7 +102,7 @@ const Animation3D = () => {
 	return (
 		<div
 			ref={refContainer}
-			className="-mb-[300px] -mx-[100px] -mt-[100px] h-[700px] pb-[100px] flex justify-center items-center"
+			className="-mb-[300px] -mx-[100px] -mt-[100px] h-[700px] pb-[130px] flex justify-center items-center"
 		>
 			<CircularProgress aria-label="Loading 3D..." />
 		</div>

@@ -7,6 +7,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+	await dbConnect()
 	const body = await request.json()
-	return Response.json(body)
+	const res = await DiaryController.create(body)
+	return Response.json(res)
 }

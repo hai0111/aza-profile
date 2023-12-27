@@ -11,7 +11,7 @@ class DiaryController {
 		return await DiaryModel.findById(id)
 	}
 
-	async update(id: string, data: any) {
+	static async update(id: string, data: any) {
 		try {
 			const dialy = await DiaryController.findById(id)
 			if (dialy) {
@@ -39,6 +39,7 @@ class DiaryController {
 	}) {
 		try {
 			return DiaryModel.find(query)
+				.sort({ day: -1 })
 				.limit(size)
 				.skip((index - 1) * size)
 		} catch (err) {
@@ -46,7 +47,9 @@ class DiaryController {
 		}
 	}
 
-	async delete() {}
+	static async delete(id: string) {
+		return await DiaryModel.findByIdAndDelete(id)
+	}
 }
 
 export default DiaryController

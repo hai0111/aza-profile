@@ -1,9 +1,11 @@
 'use client'
 
+import Animation3D from '@/components/Animation3D'
 import Container from '@/components/Container'
 import Add from '@/components/diary/Add'
 import DairyItem, { IDataDiary } from '@/components/diary/Item'
 import myAxios from '@/services/apiClient'
+import apiHandler from '@/services/apiHandler'
 import { ClientOnly } from '@/utils'
 import {
 	Button,
@@ -23,10 +25,8 @@ const Diary = () => {
 
 	const getData = async () => {
 		try {
-			if (!list.length) {
-				const res = await myAxios.get('/api/diary')
-				setList(res.data)
-			}
+			const res = await myAxios.get('/api/diary')
+			setList(res.data)
 		} catch (err) {
 			console.log(err)
 		}
@@ -41,10 +41,9 @@ const Diary = () => {
 	}, [])
 
 	const saveData = useCallback((data: IDataDiary) => {
-		setList((list) => {
-			const idx = list.findIndex((item) => item.id === data.id)
-			list[idx] = { ...data }
-			return [...list]
+		apiHandler(async () => {
+			await myAxios.put(`/api/diary/${data._id}`, data)
+			getData()
 		})
 	}, [])
 
@@ -62,27 +61,30 @@ const Diary = () => {
 		onOpen()
 	}, [])
 
-	const handleDelete = () => {
-		setList((list) => {
-			return list.filter(({ id }) => id !== idDelete.current)
-		})
+	const handleDelete = async () => {
 		onClose()
+		apiHandler(async () => {
+			await myAxios.delete(`/api/diary/${idDelete.current}`)
+			getData()
+		})
 	}
 
 	// Handle Add
 
 	return (
 		<Container>
-			<div className="flex justify-center">
-				<Add />
+			<Animation3D />
+
+			<div className="flex justify-center pb-5 pt-20">
+				<Add getData={getData} />
 			</div>
 
 			<div className="flex flex-col gap-5">
 				<ClientOnly>
 					{list.map((item) => (
 						<DairyItem
-							key={item.id}
-							editable={item.id === activeEditable}
+							key={item._id}
+							editable={item._id === activeEditable}
 							data={item}
 							setActive={setActive}
 							saveData={saveData}

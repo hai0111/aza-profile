@@ -1,3 +1,4 @@
+import myAxios from '@/services/apiClient'
 import useDate from '@/utils/useDate'
 import {
 	Button,
@@ -10,8 +11,14 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import { useFormik } from 'formik'
+import moment from 'moment'
+import { FC } from 'react'
 
-const Add = () => {
+interface Props {
+	getData(): Promise<any>
+}
+
+const Add: FC<Props> = ({ getData }) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const { dateTime, DatePicker, setDateTime } = useDate()
 
@@ -19,9 +26,17 @@ const Add = () => {
 		initialValues: {
 			content: '',
 			interest: false,
+			day: moment().format('DD/MM/YYYY HH:mm'),
 		},
-		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2))
+		onSubmit: async (values) => {
+			try {
+				const res = await myAxios.post('/api/diary', values)
+				console.log(getData)
+				getData()
+				onClose()
+			} catch (err) {
+				throw err
+			}
 		},
 	})
 
@@ -39,22 +54,27 @@ const Add = () => {
 					<ModalHeader className="flex-col">Add Diary</ModalHeader>
 					<ModalBody>
 						<div className="flex items-center text-sm tracking-tight gap-x-2">
-							{dateTime} <DatePicker />
-						</div>
-						<form onSubmit={formik.handleSubmit}>
-							<Textarea
-								placeholder="Type something..."
-								value={formik.values.content}
-								onChange={formik.handleChange}
-								name="content"
+							{dateTime}
+							<DatePicker
+								onValueChange={(val) => formik.setFieldValue('day', val)}
 							/>
-						</form>
+						</div>
+						<Textarea
+							placeholder="Type something..."
+							value={formik.values.content}
+							onChange={formik.handleChange}
+							name="content"
+						/>
 					</ModalBody>
 					<ModalFooter>
 						<Button color="danger" variant="light" onPress={onClose}>
 							Close
 						</Button>
-						<Button color="success" onPress={onClose} className="text-white">
+						<Button
+							color="success"
+							onClick={() => formik.handleSubmit()}
+							className="text-white"
+						>
 							Save
 						</Button>
 					</ModalFooter>

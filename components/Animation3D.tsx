@@ -9,6 +9,7 @@ import {
 	RoomEnvironment,
 } from 'three/examples/jsm/Addons.js'
 import { CircularProgress } from '@nextui-org/react'
+import Container from './Container'
 
 const Animation3D = () => {
 	const refContainer = useRef<HTMLDivElement>(null)
@@ -41,7 +42,7 @@ const Animation3D = () => {
 			100
 		)
 
-		camera.position.set(5, 2, 8)
+		camera.position.set(-5, 2, -8)
 
 		const controls = new OrbitControls(camera, renderer.domElement)
 		controls.target.set(0, 0.5, 0)
@@ -59,7 +60,7 @@ const Animation3D = () => {
 			function (gltf) {
 				const model = gltf.scene
 				model.position.set(0.5, 1, 0)
-				model.scale.set(0.006, 0.006, 0.006)
+				model.scale.set(0.007, 0.007, 0.007)
 				scene.add(model)
 
 				mixer = new THREE.AnimationMixer(model)
@@ -100,12 +101,14 @@ const Animation3D = () => {
 	}, [refContainer])
 
 	return (
-		<div
-			ref={refContainer}
-			className="-mb-[300px] -mx-[100px] -mt-[100px] h-[700px] pb-[130px] flex justify-center items-center"
-		>
-			<CircularProgress aria-label="Loading 3D..." />
-		</div>
+		<Container>
+			<div
+				ref={refContainer}
+				className="-mb-[200px] -mx-[60px] -mt-[100px] h-[700px] pb-[30px] flex justify-center items-center relative"
+			>
+				<CircularProgress aria-label="Loading 3D..." />
+			</div>
+		</Container>
 	)
 }
 

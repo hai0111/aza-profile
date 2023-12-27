@@ -59,6 +59,7 @@ const Add: FC<Props> = ({ getData }) => {
 								onValueChange={(val) => formik.setFieldValue('day', val)}
 							/>
 						</div>
+
 						<Textarea
 							placeholder="Type something..."
 							value={formik.values.content}

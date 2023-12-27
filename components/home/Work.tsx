@@ -1,19 +1,20 @@
-import React from "react";
+import React from 'react'
 
 const Work = () => (
-  <div className="mt-7">
-    <h3 className="text-xl font-bold underline decoration-4 decoration-gray-500 underline-offset-4">
-      Work
-    </h3>
+	<div className="mt-7">
+		<h3 className="text-xl font-bold underline decoration-4 decoration-gray-500 underline-offset-4">
+			Work
+		</h3>
 
-    <p className="mt-3 indent-4">
-      Takuya is a freelance and a full-stack developer based in Osaka with a
-      passion for building digital services/stuff he wants. He has a knack for
-      all things launching products, from planning and designing all the way to
-      solving real-life problems with code. When not online, he loves hanging
-      out with his camera.
-    </p>
-  </div>
-);
+		<p className="mt-3 indent-4">
+			Nguyen Van Hai is a young web developer. With a specialization in the
+			JavaScript language, he can tackle various issues related to this
+			programming language. Leveraging his skills and accumulated experience, he
+			is capable of constructing websites that satisfy even the most discerning
+			clients, ensuring adherence to the requirements outlined in the
+			documentation.
+		</p>
+	</div>
+)
 
-export default Work;
+export default Work

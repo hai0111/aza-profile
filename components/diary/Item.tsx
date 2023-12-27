@@ -20,7 +20,7 @@ import { TbDots } from 'react-icons/tb'
 export interface IDataDiary {
 	_id: number
 	day: string
-	star: boolean
+	interest: boolean
 	content: string
 }
 
@@ -63,7 +63,7 @@ const DiaryItem: FC<Props> = ({
 
 	const toggleImportance = () => {
 		const data = { ...diary }
-		data.star = !data.star
+		data.interest = !data.interest
 		saveData(data)
 	}
 
@@ -117,7 +117,7 @@ const DiaryItem: FC<Props> = ({
 				className="text-yellow-500 text-xl me-6 md:me-0 cursor-pointer"
 				onClick={toggleImportance}
 			>
-				{diary.star ? <PiStarFill /> : <PiStarThin />}
+				{diary.interest ? <PiStarFill /> : <PiStarThin />}
 			</div>
 
 			<Dropdown className="min-w-[100px] -translate-y-2" size="sm">

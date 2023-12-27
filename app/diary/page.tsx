@@ -73,8 +73,6 @@ const Diary = () => {
 
 	return (
 		<Container>
-			<Animation3D />
-
 			<div className="flex justify-center pb-5 pt-20">
 				<Add getData={getData} />
 			</div>

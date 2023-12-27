@@ -14,8 +14,6 @@ import Work from '@/components/home/Work'
 export default function Home() {
 	return (
 		<Container>
-			<Animation3D />
-
 			<FadeUp onAnimationStart={() => window.scrollTo({ top: 0 })}>
 				<Greeting />
 			</FadeUp>

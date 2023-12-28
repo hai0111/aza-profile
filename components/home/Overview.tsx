@@ -9,7 +9,7 @@ const Overview = () => (
 
 		<Image
 			className="rounded-full border-2 border-white"
-			src={'/images/takuya.jpg'}
+			src={'/images/me.jpg'}
 			alt="..."
 			width={100}
 			height={100}

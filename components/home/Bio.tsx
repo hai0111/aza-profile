@@ -24,7 +24,7 @@ const Bios: { time: string; content: ReactNode }[] = [
 		content: 'Commenced the first internship term at Diligo Holding.',
 	},
 	{
-		time: '06/2022',
+		time: '09/2022',
 		content:
 			"Graduated with a Bachelor's degree in Applied Engineering, specializing in Information Technology.",
 	},

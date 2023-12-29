@@ -86,6 +86,10 @@ const useDate = (value: string = moment().format(formatDateTime)) => {
 							if (onValueChange) onValueChange(value)
 						}
 
+						const resetTime = () => {
+							setTime(moment(dateTime, formatDateTime).format('HH:mm'))
+						}
+
 						return (
 							<>
 								<DayPicker
@@ -99,7 +103,12 @@ const useDate = (value: string = moment().format(formatDateTime)) => {
 										value={time}
 										onValueChange={setTime}
 										className={styles['custom-input']}
-										endContent={<CiClock2 />}
+										endContent={
+											<CiClock2
+												onClick={resetTime}
+												className="cursor-pointer"
+											/>
+										}
 										errorMessage={errorMessage}
 									/>
 									<Button

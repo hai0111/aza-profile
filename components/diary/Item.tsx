@@ -63,7 +63,7 @@ const DiaryItem: FC<Props> = ({
 
 	const toggleImportance = () => {
 		formik.setFieldValue('interest', !formik.values.interest)
-		formik.submitForm()
+		if (!editable) formik.submitForm()
 	}
 
 	// Date controller
@@ -142,7 +142,7 @@ const DiaryItem: FC<Props> = ({
 				className="text-yellow-500 text-xl me-6 md:me-0 cursor-pointer"
 				onClick={toggleImportance}
 			>
-				{data.interest ? <PiStarFill /> : <PiStarThin />}
+				{formik.values.interest ? <PiStarFill /> : <PiStarThin />}
 			</div>
 
 			<Dropdown className="min-w-[100px] -translate-y-2" size="sm">

@@ -1,4 +1,5 @@
 import myAxios from '@/services/apiClient'
+import { useLoad } from '@/services/apiHandler'
 import useDate from '@/utils/useDate'
 import {
 	Button,
@@ -12,7 +13,9 @@ import {
 } from '@nextui-org/react'
 import { useFormik } from 'formik'
 import moment from 'moment'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
+import { toast } from 'react-toastify'
+import * as Yup from 'yup'
 
 interface Props {
 	getData(): Promise<any>
@@ -21,6 +24,20 @@ interface Props {
 const Add: FC<Props> = ({ getData }) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const { dateTime, DatePicker, setDateTime } = useDate()
+	const { loading, handler: onSubmit } = useLoad(async (values) => {
+		try {
+			await myAxios.post('/api/diary', values)
+			toast('Added successfully', {
+				type: 'success',
+			})
+			getData()
+			onClose()
+		} catch (err) {
+			throw err
+		}
+	})
+
+	const validationSchema = Yup
 
 	const formik = useFormik({
 		initialValues: {
@@ -28,17 +45,17 @@ const Add: FC<Props> = ({ getData }) => {
 			interest: false,
 			day: moment().format('DD/MM/YYYY HH:mm'),
 		},
-		onSubmit: async (values) => {
-			try {
-				const res = await myAxios.post('/api/diary', values)
-				console.log(getData)
-				getData()
-				onClose()
-			} catch (err) {
-				throw err
-			}
-		},
+		onSubmit,
+		onReset() {},
+		// validationSchema,
 	})
+
+	useEffect(() => {
+		if (isOpen) {
+			formik.resetForm()
+			setDateTime(moment().format('DD/MM/YYYY HH:mm'))
+		}
+	}, [isOpen])
 
 	return (
 		<>
@@ -65,6 +82,7 @@ const Add: FC<Props> = ({ getData }) => {
 							value={formik.values.content}
 							onChange={formik.handleChange}
 							name="content"
+							errorMessage={formik.touched.content && formik.errors.content}
 						/>
 					</ModalBody>
 					<ModalFooter>
@@ -75,6 +93,7 @@ const Add: FC<Props> = ({ getData }) => {
 							color="success"
 							onClick={() => formik.handleSubmit()}
 							className="text-white"
+							isLoading={loading}
 						>
 							Save
 						</Button>

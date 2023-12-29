@@ -21,10 +21,10 @@ interface INavLink {
 }
 
 const navLinks: INavLink[] = [
-	// {
-	// 	link: '/diary',
-	// 	text: 'Diary',
-	// },
+	{
+		link: '/diary',
+		text: 'Diary',
+	},
 	{
 		link: 'https://github.com/hai0111?tab=repositories',
 		text: 'Sources',

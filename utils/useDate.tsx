@@ -1,5 +1,10 @@
 'use client'
 
+/* 
+	Giá chị khởi đầu chỉ set khi mới mount
+	Mọi thao tác sau đó đều phải ăn theo dateTime
+*/
+
 import {
 	Button,
 	Input,
@@ -7,12 +12,11 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@nextui-org/react'
-import { format, parse } from 'date-fns'
 import moment from 'moment'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
-import { FcCalendar } from 'react-icons/fc'
 import { CiClock2 } from 'react-icons/ci'
+import { FcCalendar } from 'react-icons/fc'
 import styles from './util.module.css'
 
 export const checkTime = (time: string) => {
@@ -51,11 +55,11 @@ const useDate = (value: string = moment().format(formatDateTime)) => {
 				<PopoverContent>
 					{() => {
 						const [date, setDate] = useState<Date | undefined>(
-							moment(value, formatDateTime).toDate()
+							moment(dateTime, formatDateTime).toDate()
 						)
 
 						const [time, setTime] = useState<string>(
-							moment(value, formatDateTime).format('HH:mm')
+							moment(dateTime, formatDateTime).format('HH:mm')
 						)
 
 						const errorMessage = useMemo(() => {
@@ -63,12 +67,11 @@ const useDate = (value: string = moment().format(formatDateTime)) => {
 						}, [time])
 
 						useEffect(() => {
-							if (!open) {
-								setDateTime(value)
-								setDate(moment(value, formatDateTime).toDate())
-								setTime(moment(value, formatDateTime).format('HH:mm'))
+							if (open) {
+								setDate(moment(dateTime, formatDateTime).toDate())
+								setTime(moment(dateTime, formatDateTime).format('HH:mm'))
 							}
-						}, [open])
+						}, [dateTime])
 
 						const handleSetDateTime = () => {
 							if (errorMessage) return

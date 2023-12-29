@@ -44,7 +44,7 @@ const Bio = () => (
 		<table className="mt-2">
 			<tbody>
 				{Bios.map(({ content, time }) => (
-					<tr key={time} className="leading-5 align-top">
+					<tr key={time + content} className="leading-5 align-top">
 						<td className="pr-5 py-2 text-start">
 							<strong>{time}</strong>
 						</td>

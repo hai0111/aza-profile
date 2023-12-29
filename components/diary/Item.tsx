@@ -3,19 +3,21 @@
 import useDate from '@/utils/useDate'
 import {
 	Button,
+	CircularProgress,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
 	DropdownTrigger,
 	Textarea,
 } from '@nextui-org/react'
-import { FC, memo, useEffect, useState } from 'react'
+import { FC, memo, useEffect, useRef, useState } from 'react'
 import { FaTrash } from 'react-icons/fa6'
 import { IoMdClose } from 'react-icons/io'
 import { IoCheckmark } from 'react-icons/io5'
 import { MdEdit } from 'react-icons/md'
 import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
+import { CSSTransition } from 'react-transition-group'
 
 export interface IDataDiary {
 	_id: number
@@ -26,6 +28,7 @@ export interface IDataDiary {
 
 interface Props {
 	editable: boolean
+	loading: boolean
 	data: IDataDiary
 	setActive(idActive: null | number): void
 	saveData(data: IDataDiary): void
@@ -38,6 +41,7 @@ const DiaryItem: FC<Props> = ({
 	editable,
 	saveData,
 	openDelete,
+	loading,
 }) => {
 	const [diary, setDiary] = useState<IDataDiary>({
 		...data,
@@ -73,12 +77,34 @@ const DiaryItem: FC<Props> = ({
 		setDiary({ ...data, day: val })
 	}
 
+	const refLoad = useRef(null)
+
 	return (
 		<div className="group bg-white bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
 					<span className="me-1">{diary.day}</span>
 					{editable && <DatePicker onValueChange={onChangeDateTime} />}
+
+					<CSSTransition
+						in={loading}
+						unmountOnExit
+						classNames={{
+							exitActive: 'animate__animated animate__zoomOut',
+						}}
+						timeout={500}
+						nodeRef={refLoad}
+					>
+						<CircularProgress
+							ref={refLoad}
+							size="sm"
+							aria-label="Loading..."
+							className="me-3"
+							classNames={{
+								svg: 'w-4 h-4',
+							}}
+						/>
+					</CSSTransition>
 				</div>
 				{editable ? (
 					<div className="pe-3">

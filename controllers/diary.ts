@@ -28,6 +28,10 @@ class DiaryController {
 		}
 	}
 
+	static async totalRecords() {
+		return await DiaryModel.countDocuments({})
+	}
+
 	static async list({
 		query = {},
 		size = 20,
@@ -38,10 +42,18 @@ class DiaryController {
 		index?: number
 	}) {
 		try {
-			return DiaryModel.find(query)
+			const data = await DiaryModel.find(query)
 				.sort({ day: -1 })
 				.limit(size)
 				.skip((index - 1) * size)
+			return {
+				items: data,
+				page: {
+					index,
+					size,
+					totalRecords: await this.totalRecords(),
+				},
+			}
 		} catch (err) {
 			throw err
 		}

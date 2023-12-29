@@ -22,15 +22,17 @@ interface INavLink {
 
 const navLinks: INavLink[] = [
 	{
-		link: '/diary',
-		text: 'Diary',
-	},
-	{
 		link: 'https://github.com/hai0111?tab=repositories',
 		text: 'Sources',
 		icon: <IoLogoGithub />,
 	},
 ]
+
+if (process.env.NODE_ENV === 'development')
+	navLinks.unshift({
+		link: '/diary',
+		text: 'Diary',
+	})
 
 const NavbarHeader = () => {
 	return (

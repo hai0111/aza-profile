@@ -11,11 +11,10 @@ import {
 	Textarea,
 	useDisclosure,
 } from '@nextui-org/react'
-import { useFormik } from 'formik'
 import moment from 'moment'
 import { FC, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import * as Yup from 'yup'
+import diaryFormik from './diaryFormik'
 
 interface Props {
 	getData(): Promise<any>
@@ -37,18 +36,7 @@ const Add: FC<Props> = ({ getData }) => {
 		}
 	})
 
-	const validationSchema = Yup
-
-	const formik = useFormik({
-		initialValues: {
-			content: '',
-			interest: false,
-			day: moment().format('DD/MM/YYYY HH:mm'),
-		},
-		onSubmit,
-		onReset() {},
-		// validationSchema,
-	})
+	const formik = diaryFormik(onSubmit)
 
 	useEffect(() => {
 		if (isOpen) {
@@ -82,7 +70,7 @@ const Add: FC<Props> = ({ getData }) => {
 							value={formik.values.content}
 							onChange={formik.handleChange}
 							name="content"
-							errorMessage={formik.touched.content && formik.errors.content}
+							errorMessage={formik.errors.content}
 						/>
 					</ModalBody>
 					<ModalFooter>

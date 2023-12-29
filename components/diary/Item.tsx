@@ -18,6 +18,9 @@ import { MdEdit } from 'react-icons/md'
 import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
 import { CSSTransition } from 'react-transition-group'
+import diaryFormik from './diaryFormik'
+import { IDiary } from '@/models/Diary'
+import { Day } from 'react-day-picker'
 
 export interface IDataDiary {
 	_id: number
@@ -43,38 +46,31 @@ const DiaryItem: FC<Props> = ({
 	openDelete,
 	loading,
 }) => {
-	const [diary, setDiary] = useState<IDataDiary>({
+	const onCancel = () => {
+		setActive(null)
+		formik.resetForm()
+		setDateTime(data.day)
+	}
+
+	const handleSaveData = (values: IDataDiary) => {
+		saveData(values)
+		setActive(null)
+	}
+
+	const formik = diaryFormik(handleSaveData, {
 		...data,
 	})
 
-	useEffect(() => {
-		setDiary({ ...data })
-	}, [data])
-
-	const setContent = (content: string) => {
-		setDiary({ ...diary, content })
-	}
-
-	const onCancel = () => {
-		setActive(null)
-		setDiary({ ...data })
-	}
-
-	const handleSaveData = () => {
-		saveData(diary)
-		setActive(null)
-	}
-
 	const toggleImportance = () => {
-		const data = { ...diary }
-		data.interest = !data.interest
-		saveData(data)
+		formik.setFieldValue('interest', !formik.values.interest)
+		formik.submitForm()
 	}
 
 	// Date controller
-	const { DatePicker } = useDate(diary.day)
+	const { dateTime, DatePicker, setDateTime } = useDate(data.day)
+
 	const onChangeDateTime = (val: string) => {
-		setDiary({ ...data, day: val })
+		formik.setFieldValue('day', val)
 	}
 
 	const refLoad = useRef(null)
@@ -83,9 +79,8 @@ const DiaryItem: FC<Props> = ({
 		<div className="group bg-white bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
-					<span className="me-1">{diary.day}</span>
+					<span className="me-1">{dateTime}</span>
 					{editable && <DatePicker onValueChange={onChangeDateTime} />}
-
 					<CSSTransition
 						in={loading}
 						unmountOnExit
@@ -109,10 +104,12 @@ const DiaryItem: FC<Props> = ({
 				{editable ? (
 					<div className="pe-3">
 						<Textarea
+							name="content"
 							className="mt-1"
 							variant="flat"
-							value={diary.content}
-							onValueChange={setContent}
+							value={formik.values.content}
+							onChange={formik.handleChange}
+							errorMessage={formik.errors.content}
 						/>
 						<div className="flex justify-end mt-1">
 							<Button
@@ -129,21 +126,23 @@ const DiaryItem: FC<Props> = ({
 								size="sm"
 								className="text-medium text-white ms-2"
 								color="success"
-								onClick={handleSaveData}
+								onClick={formik.submitForm}
 							>
 								<IoCheckmark />
 							</Button>
 						</div>
 					</div>
 				) : (
-					<div className="mt-1 pe-5">{diary.content}</div>
+					<div className="mt-1 pe-5 text-start whitespace-pre-wrap">
+						{formik.values.content}
+					</div>
 				)}
 			</div>
 			<div
 				className="text-yellow-500 text-xl me-6 md:me-0 cursor-pointer"
 				onClick={toggleImportance}
 			>
-				{diary.interest ? <PiStarFill /> : <PiStarThin />}
+				{data.interest ? <PiStarFill /> : <PiStarThin />}
 			</div>
 
 			<Dropdown className="min-w-[100px] -translate-y-2" size="sm">

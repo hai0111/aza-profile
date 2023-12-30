@@ -1,9 +1,23 @@
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { NextRequest } from 'next/server'
 
-export const ClientOnly: FC<{ children: ReactNode }> = ({ children }) => {
-	const [loaded, setLoaded] = useState(false)
-	useEffect(() => {
-		setLoaded(true)
-	}, [])
-	return loaded ? children : null
+export const findAndReplace = <T = any,>(
+	array: T[],
+	item: T,
+	fn: (item: T) => boolean
+) => {
+	for (let index = 0; index < array.length; index++) {
+		if (fn(array[index])) {
+			array[index] = item
+			break
+		}
+	}
+}
+
+export const getQuery = (request: NextRequest) => {
+	const { searchParams } = request.nextUrl
+	const query: { [key: string]: string } = {}
+	searchParams.forEach((val, key) => {
+		query[key] = val
+	})
+	return query
 }

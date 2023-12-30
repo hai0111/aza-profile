@@ -23,6 +23,15 @@ const config: Config = {
 				light: '#1A202C',
 				dark: '#ffffffeb',
 			},
+			keyframes: {
+				'expand-y': {
+					'0%': { transform: 'scaleY(0)' },
+					'100': { transform: 'scaleY(100%)' },
+				},
+			},
+			animation: {
+				'expand-y': 'expand-y 1s ease-in-out',
+			},
 		},
 	},
 	plugins: [nextui()],

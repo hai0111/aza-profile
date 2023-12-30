@@ -12,25 +12,26 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import moment from 'moment'
-import { FC, useEffect } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import diaryFormik from './diaryFormik'
+import { IDataDiary } from './Item'
 
 interface Props {
-	getData(): Promise<any>
+	setList: Dispatch<SetStateAction<IDataDiary[]>>
 }
 
-const Add: FC<Props> = ({ getData }) => {
+const Add: FC<Props> = ({ setList }) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const { dateTime, DatePicker, setDateTime } = useDate()
 	const { loading, handler: onSubmit } = useLoad(async (values) => {
 		try {
-			await myAxios.post('/api/diary', values)
+			const res = await myAxios.post('/api/diary', values)
 			toast('Added successfully', {
 				type: 'success',
 			})
-			getData()
 			onClose()
+			setList((arr) => [res.data].concat(arr))
 		} catch (err) {
 			throw err
 		}
@@ -66,6 +67,7 @@ const Add: FC<Props> = ({ getData }) => {
 						</div>
 
 						<Textarea
+							autoFocus
 							placeholder="Type something..."
 							value={formik.values.content}
 							onChange={formik.handleChange}

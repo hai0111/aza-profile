@@ -139,7 +139,7 @@ const DiaryItem: FC<Props> = ({
 				)}
 			</div>
 			<div
-				className="text-yellow-500 text-xl me-6 md:me-0 cursor-pointer"
+				className="text-yellow-500 text-xl me-6 cursor-pointer"
 				onClick={toggleImportance}
 			>
 				{formik.values.interest ? <PiStarFill /> : <PiStarThin />}
@@ -150,7 +150,7 @@ const DiaryItem: FC<Props> = ({
 					<Button
 						isIconOnly
 						disableRipple
-						className="bg-transparent text-xl min-w-0 px-0 ms-2 md:hidden absolute top-1 right-1 z-0"
+						className="bg-transparent text-xl min-w-0 px-0 ms-2 absolute top-1 right-1 z-0"
 						size="sm"
 						variant="solid"
 					>
@@ -172,27 +172,6 @@ const DiaryItem: FC<Props> = ({
 					</DropdownItem>
 				</DropdownMenu>
 			</Dropdown>
-
-			<div className="hidden md:flex flex-col justify-center gap-2 absolute top-0 bottom-0 px-3 left-full overflow-hidden">
-				<Button
-					isIconOnly
-					size="sm"
-					className="-translate-x-12 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 rounded-full text-[0.9rem]"
-					color="primary"
-					onClick={() => setActive(data._id)}
-				>
-					<MdEdit />
-				</Button>
-				<Button
-					isIconOnly
-					size="sm"
-					className="-translate-x-12 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 delay-75 rounded-full text-[0.7rem]"
-					color="danger"
-					onClick={() => openDelete(data._id)}
-				>
-					<FaTrash />
-				</Button>
-			</div>
 		</div>
 	)
 }

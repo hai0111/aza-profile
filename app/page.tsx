@@ -1,6 +1,5 @@
 'use client'
 
-import Animation3D from '@/components/Animation3D'
 import Container from '@/components/Container'
 import FadeUp from '@/components/animations/FadeUp'
 import Bio from '@/components/home/Bio'

@@ -35,6 +35,7 @@ button {
 
 .custom-scroll::-webkit-scrollbar {
 	width: 5px;
+	height: 0;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {

@@ -38,6 +38,8 @@ const Diary = () => {
 
 	const allowLoadmore = useRef<boolean>(true)
 
+	const refScroll = useRef({ scrollToTop() {} })
+
 	const [list, setList] = useState<IDataDiary[]>([])
 
 	const listRender = useMemo(() => {
@@ -61,7 +63,7 @@ const Diary = () => {
 			const res = await myAxios.put(`/api/diary/${data._id}`, data)
 			setLoadingList((arr) => arr.filter((id) => id !== data._id))
 			setList((arr) => {
-				findAndReplace(arr, data, (item) => item._id === data._id)
+				findAndReplace(arr, res.data, (item) => item._id === data._id)
 				return arr
 			})
 			toast('Edited successfully', {
@@ -103,7 +105,12 @@ const Diary = () => {
 	return (
 		<Container>
 			<div className="flex justify-center pb-5 pt-20">
-				<Add setList={setList} />
+				<Add
+					setList={(fn) => {
+						setList(fn)
+						refScroll.current.scrollToTop()
+					}}
+				/>
 			</div>
 
 			<ClientOnly>
@@ -111,6 +118,7 @@ const Diary = () => {
 					allowScorll={allowLoadmore.current}
 					className="max-h-[80vh]"
 					loadMore={getData}
+					ref={refScroll}
 				>
 					<TransitionGroup className="flex flex-col gap-5">
 						{listRender.map(({ data, refNode }) => (

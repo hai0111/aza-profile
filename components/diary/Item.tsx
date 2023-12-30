@@ -76,7 +76,7 @@ const DiaryItem: FC<Props> = ({
 	const refLoad = useRef(null)
 
 	return (
-		<div className="group bg-white bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
+		<div className="group bg-white bg-opacity-40 dark:bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
 					<span className="me-1">{dateTime}</span>

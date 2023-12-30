@@ -50,7 +50,9 @@ const Diary = () => {
 		pageInfo.current.index += 1
 		const res = await myAxios.get('/api/diary', { params: pageInfo.current })
 		setList((arr) => [...arr, ...res.data.items])
-		allowLoadmore.current = list.length < res.data.page.totalRecords
+		const { size, index, totalRecords } = res.data.page
+		allowLoadmore.current =
+			(index - 1) * size + res.data.items.length < totalRecords
 	}
 
 	const setActive = useCallback((id: number | null) => {
@@ -116,7 +118,7 @@ const Diary = () => {
 			<ClientOnly>
 				<InfinitieScroll
 					allowScorll={allowLoadmore.current}
-					className="max-h-[80vh]"
+					className="max-h-[600px]"
 					loadMore={getData}
 					ref={refScroll}
 				>

@@ -34,7 +34,7 @@ const InfinitieScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 			const lastScroll = useRef(0)
 			const handleScroll = (e: UIEvent<HTMLDivElement>) => {
 				const { scrollTop, offsetHeight, scrollHeight } = e.currentTarget
-				const checkPosition = scrollTop + offsetHeight > scrollHeight - 10
+				const checkPosition = scrollTop + offsetHeight > scrollHeight - 50
 				const isDown = scrollTop > lastScroll.current
 				const shouldScorll = allowScorll && checkPosition && isDown && !loading
 				if (shouldScorll) loadMoreHandler()

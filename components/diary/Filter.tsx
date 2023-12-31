@@ -27,12 +27,15 @@ const Filter: FC<Props> = ({ setDataSearch }) => {
 	const [fromDate, setFromDate] = useState<Date | null>(null)
 	const [toDate, setToDate] = useState<Date | null>(null)
 	const filterDateFrom = (date: Date) => {
-		return moment(date).isSameOrBefore(moment())
+		return (
+			moment(date).isSameOrBefore(moment()) &&
+			(moment(date).isSameOrBefore(moment(toDate)) || !toDate)
+		)
 	}
 
 	const filterDateTo = (date: Date) => {
 		return (
-			moment(date).isSameOrAfter(moment(fromDate)) &&
+			(moment(date).isSameOrAfter(moment(fromDate)) || !fromDate) &&
 			moment(date).isSameOrBefore(moment())
 		)
 	}

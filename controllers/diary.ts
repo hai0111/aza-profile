@@ -1,4 +1,5 @@
 import DiaryModel, { IDiary } from '@/models/Diary'
+import moment from 'moment'
 import { Document, Query } from 'mongoose'
 
 class DiaryController {
@@ -33,14 +34,23 @@ class DiaryController {
 	}
 
 	static async list({
-		query = {},
+		fromDate,
+		toDate,
 		size = 20,
 		index = 1,
 	}: {
-		query?: { [key: string]: any }
+		fromDate: null | string
+		toDate: null | string
 		size?: number
 		index?: number
 	}) {
+		let queryByDate: any = {}
+		const query: any = {}
+		if (fromDate) queryByDate.$gte = fromDate + ' 00:00'
+		if (toDate) queryByDate.$lte = toDate + ' 23:59'
+
+		if (Object.keys(queryByDate).length) query.day = queryByDate
+
 		try {
 			const data = await DiaryModel.find(query)
 				.sort({ day: -1 })

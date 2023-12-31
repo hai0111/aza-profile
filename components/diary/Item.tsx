@@ -1,6 +1,5 @@
 'use client'
 
-import useDate from '@/utils/useDate'
 import {
 	Button,
 	CircularProgress,
@@ -10,7 +9,7 @@ import {
 	DropdownTrigger,
 	Textarea,
 } from '@nextui-org/react'
-import { FC, memo, useEffect, useRef, useState } from 'react'
+import { FC, memo, useRef, useState } from 'react'
 import { FaTrash } from 'react-icons/fa6'
 import { IoMdClose } from 'react-icons/io'
 import { IoCheckmark } from 'react-icons/io5'
@@ -19,8 +18,9 @@ import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
 import { CSSTransition } from 'react-transition-group'
 import diaryFormik from './diaryFormik'
-import { IDiary } from '@/models/Diary'
-import { Day } from 'react-day-picker'
+import moment from 'moment'
+import DatePicker from '../DatePicker'
+import { blockFuture } from '@/utils'
 
 export interface IDataDiary {
 	_id: number
@@ -49,7 +49,6 @@ const DiaryItem: FC<Props> = ({
 	const onCancel = () => {
 		setActive(null)
 		formik.resetForm()
-		setDateTime(data.day)
 	}
 
 	const handleSaveData = (values: IDataDiary) => {
@@ -67,20 +66,40 @@ const DiaryItem: FC<Props> = ({
 	}
 
 	// Date controller
-	const { dateTime, DatePicker, setDateTime } = useDate(data.day)
-
-	const onChangeDateTime = (val: string) => {
-		formik.setFieldValue('day', val)
-	}
-
 	const refLoad = useRef(null)
 
 	return (
 		<div className="group bg-white bg-opacity-40 dark:bg-opacity-10 flex items-center py-2 px-4 rounded-2xl relative">
 			<div className="flex-1">
 				<div className="text-xs flex items-center">
-					<span className="me-1">{dateTime}</span>
-					{editable && <DatePicker onValueChange={onChangeDateTime} />}
+					<span className="me-1">
+						{editable ? (
+							<div className="flex items-center">
+								<DatePicker
+									selected={
+										formik.values.day
+											? moment(formik.values.day, 'DD/MM/YYYY HH:mm').toDate()
+											: undefined
+									}
+									onChange={(date) =>
+										formik.setFieldValue(
+											'day',
+											date ? moment(date).format('DD/MM/YYYY HH:mm') : null
+										)
+									}
+									dateFormat={'dd/MM/yyyy HH:mm'}
+									showTimeInput
+									filterDate={blockFuture}
+								/>
+
+								<span className="text-danger-400 text-xs">
+									{formik.errors.day}
+								</span>
+							</div>
+						) : (
+							data.day
+						)}
+					</span>
 					<CSSTransition
 						in={loading}
 						unmountOnExit

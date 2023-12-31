@@ -2,6 +2,7 @@
 
 import Container from '@/components/Container'
 import Add from '@/components/diary/Add'
+import Filter from '@/components/diary/Filter'
 import DairyItem, { IDataDiary } from '@/components/diary/Item'
 import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
@@ -17,6 +18,7 @@ import {
 	ModalHeader,
 	useDisclosure,
 } from '@nextui-org/react'
+import moment from 'moment'
 import {
 	createRef,
 	useCallback,
@@ -25,6 +27,7 @@ import {
 	useRef,
 	useState,
 } from 'react'
+import ReactDatePicker from 'react-datepicker'
 import { toast } from 'react-toastify'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
@@ -46,14 +49,16 @@ const Diary = () => {
 		return list.map((data) => ({ data, refNode: createRef<HTMLDivElement>() }))
 	}, [list])
 
-	const getData = async () => {
+	const { loading, handler: getData } = useLoad(async () => {
 		pageInfo.current.index += 1
-		const res = await myAxios.get('/api/diary', { params: pageInfo.current })
+		const res = await myAxios.get('/api/diary', {
+			params: { ...pageInfo.current, ...dataSearch },
+		})
 		setList((arr) => [...arr, ...res.data.items])
 		const { size, index, totalRecords } = res.data.page
 		allowLoadmore.current =
 			(index - 1) * size + res.data.items.length < totalRecords
-	}
+	})
 
 	const setActive = useCallback((id: number | null) => {
 		setActiveEditable(id)
@@ -101,12 +106,33 @@ const Diary = () => {
 		})
 	}
 
-	// Handle loading
+	// loading item controller
 	const [loadingList, setLoadingList] = useState<number[]>([])
+
+	// Data search controller
+	const [dataSearch, setDataSearch] = useState<{
+		fromDate: null | string
+		toDate: null | string
+	}>({
+		fromDate: null,
+		toDate: null,
+	})
+
+	useEffect(() => {
+		if (!loading) {
+			pageInfo.current.index = 0
+			allowLoadmore.current = true
+			setList([])
+			getData()
+			refScroll.current.scrollToTop()
+		}
+	}, [dataSearch.fromDate, dataSearch.toDate])
 
 	return (
 		<Container>
-			<div className="flex justify-center pb-5 pt-20">
+			<div className="flex justify-end gap-3 pb-5 pt-20 items-center">
+				<Filter setDataSearch={setDataSearch} />
+
 				<Add
 					setList={(fn) => {
 						setList(fn)

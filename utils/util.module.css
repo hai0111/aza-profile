@@ -5,6 +5,7 @@
 
 .custom-rdp {
 	--rdp-background-color: rgb(0 0 0 / 10%);
+	--rdp-accent-color: rgb(251 146 60);
 }
 
 .dark .custom-rdp {

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { NextRequest } from 'next/server'
 
 export const findAndReplace = <T = any,>(
@@ -15,9 +16,11 @@ export const findAndReplace = <T = any,>(
 
 export const getQuery = (request: NextRequest) => {
 	const { searchParams } = request.nextUrl
-	const query: { [key: string]: string } = {}
+	const query: { [key: string]: any } = {}
 	searchParams.forEach((val, key) => {
 		query[key] = val
 	})
 	return query
 }
+
+export const blockFuture = (date: Date) => moment(date).isSameOrBefore(moment())

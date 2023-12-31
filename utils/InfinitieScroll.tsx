@@ -2,18 +2,15 @@
 import { useLoad } from '@/services/apiHandler'
 import clsx from 'clsx'
 import {
-	FC,
 	ForwardRefExoticComponent,
 	ReactNode,
 	RefAttributes,
 	UIEvent,
 	forwardRef,
 	useCallback,
-	useEffect,
 	useImperativeHandle,
 	useRef,
 } from 'react'
-import { CSSTransition } from 'react-transition-group'
 
 interface Props {
 	loadMore(): Promise<any>
@@ -40,10 +37,6 @@ const InfinitieScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 				if (shouldScorll) loadMoreHandler()
 				lastScroll.current = scrollTop
 			}
-
-			useEffect(() => {
-				loadMoreHandler()
-			}, [])
 
 			const scrollToTop = useCallback(() => {
 				if (refScrollBox.current) refScrollBox.current.scrollTo({ top: 0 })

@@ -20,7 +20,9 @@ html:is(.dark) {
 	--toastify-text-color-light: #fff;
 }
 
-button {
+button,
+a,
+input {
 	outline: none;
 }
 
@@ -45,4 +47,20 @@ button {
 
 .dark .custom-scroll::-webkit-scrollbar-thumb {
 	background-color: rgb(0 0 0 / 30%);
+}
+
+.react-datepicker-wrapper input {
+	background-color: hsl(
+		var(--nextui-default-100) /
+			var(--nextui-default-100-opacity, var(--tw-bg-opacity))
+	) !important;
+}
+
+input.react-datepicker-time__input {
+	padding: 0 8px;
+	border-radius: 4px;
+}
+
+.dark input.react-datepicker-time__input {
+	color: #ffffffeb;
 }

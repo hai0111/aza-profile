@@ -1,6 +1,5 @@
 import myAxios from '@/services/apiClient'
 import { useLoad } from '@/services/apiHandler'
-import useDate from '@/utils/useDate'
 import {
 	Button,
 	Modal,
@@ -16,14 +15,16 @@ import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import diaryFormik from './diaryFormik'
 import { IDataDiary } from './Item'
-
+import { GrAdd } from 'react-icons/gr'
+import ReactDatePicker from 'react-datepicker'
+import DatePicker from '../DatePicker'
+import { blockFuture } from '@/utils'
 interface Props {
 	setList: Dispatch<SetStateAction<IDataDiary[]>>
 }
 
 const Add: FC<Props> = ({ setList }) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-	const { dateTime, DatePicker, setDateTime } = useDate()
 	const { loading, handler: onSubmit } = useLoad(async (values) => {
 		try {
 			const res = await myAxios.post('/api/diary', values)
@@ -42,7 +43,7 @@ const Add: FC<Props> = ({ setList }) => {
 	useEffect(() => {
 		if (isOpen) {
 			formik.resetForm()
-			setDateTime(moment().format('DD/MM/YYYY HH:mm'))
+			formik.setFieldValue('day', moment().format('DD/MM/YYYY HH:mm'))
 		}
 	}, [isOpen])
 
@@ -54,25 +55,42 @@ const Add: FC<Props> = ({ setList }) => {
 				className="font-medium text-white"
 			>
 				Add
+				<GrAdd />
 			</Button>
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-				<ModalContent>
+				<ModalContent className="overflow-visible">
 					<ModalHeader className="flex-col">Add Diary</ModalHeader>
 					<ModalBody>
 						<div className="flex items-center text-sm tracking-tight gap-x-2">
-							{dateTime}
 							<DatePicker
-								onValueChange={(val) => formik.setFieldValue('day', val)}
+								selected={
+									formik.values.day
+										? moment(formik.values.day, 'DD/MM/YYYY HH:mm').toDate()
+										: null
+								}
+								onChange={(date) => {
+									formik.setFieldValue(
+										'day',
+										date ? moment(date).format('DD/MM/YYYY HH:mm') : null
+									)
+								}}
+								dateFormat={'dd/MM/yyyy HH:mm'}
+								isClearable
+								showTimeInput
+								filterDate={blockFuture}
 							/>
+							<span className="text-danger-400 text-xs">
+								{formik.errors.day}
+							</span>
 						</div>
 
 						<Textarea
-							autoFocus
 							placeholder="Type something..."
 							value={formik.values.content}
 							onChange={formik.handleChange}
 							name="content"
-							errorMessage={formik.errors.content}
+							onInput={() => formik.setFieldTouched('content', true)}
+							errorMessage={formik.touched.content && formik.errors.content}
 						/>
 					</ModalBody>
 					<ModalFooter>

@@ -6,8 +6,7 @@ import { NextRequest } from 'next/server'
 export async function GET(request: NextRequest) {
 	await dbConnect()
 	const query = getQuery(request)
-
-	return new Response(JSON.stringify(await DiaryController.list(query)))
+	return new Response(JSON.stringify(await DiaryController.list(query as any)))
 }
 
 export async function POST(request: NextRequest) {

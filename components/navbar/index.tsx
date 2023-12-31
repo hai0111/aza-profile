@@ -28,11 +28,11 @@ const navLinks: INavLink[] = [
 	},
 ]
 
-// if (process.env.NODE_ENV === 'development')
-navLinks.unshift({
-	link: '/diary',
-	text: 'Diary',
-})
+if (process.env.NODE_ENV === 'development')
+	navLinks.unshift({
+		link: '/diary',
+		text: 'Diary',
+	})
 
 const NavbarHeader = () => {
 	return (

@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
 	content: Yup.string().required('Required'),
-	day: Yup.string().required('Required'),
+	day: Yup.date().required('Required'),
 })
 
 const diaryFormik = (onSubmit: (...p: any) => void, initData?: IDiary) =>
@@ -13,7 +13,7 @@ const diaryFormik = (onSubmit: (...p: any) => void, initData?: IDiary) =>
 		initialValues: initData || {
 			content: '',
 			interest: false,
-			day: moment().format('DD/MM/YYYY HH:mm'),
+			day: moment().toDate(),
 		},
 		onSubmit,
 		validationSchema,

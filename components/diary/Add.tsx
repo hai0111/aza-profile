@@ -1,5 +1,6 @@
 import myAxios from '@/services/apiClient'
 import { useLoad } from '@/services/apiHandler'
+import { blockFuture, ifIsString } from '@/utils'
 import {
 	Button,
 	Modal,
@@ -12,13 +13,11 @@ import {
 } from '@nextui-org/react'
 import moment from 'moment'
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
-import { toast } from 'react-toastify'
-import diaryFormik from './diaryFormik'
-import { IDataDiary } from './Item'
 import { GrAdd } from 'react-icons/gr'
-import ReactDatePicker from 'react-datepicker'
+import { toast } from 'react-toastify'
 import DatePicker from '../DatePicker'
-import { blockFuture } from '@/utils'
+import { IDataDiary } from './Item'
+import diaryFormik from './diaryFormik'
 interface Props {
 	setList: Dispatch<SetStateAction<IDataDiary[]>>
 }
@@ -34,7 +33,9 @@ const Add: FC<Props> = ({ setList }) => {
 			onClose()
 			setList((arr) => [res.data].concat(arr))
 		} catch (err) {
-			throw err
+			toast('Something went wrong!', {
+				type: 'error',
+			})
 		}
 	})
 
@@ -43,7 +44,7 @@ const Add: FC<Props> = ({ setList }) => {
 	useEffect(() => {
 		if (isOpen) {
 			formik.resetForm()
-			formik.setFieldValue('day', moment().format('DD/MM/YYYY HH:mm'))
+			formik.setFieldValue('day', moment().toDate())
 		}
 	}, [isOpen])
 
@@ -63,16 +64,9 @@ const Add: FC<Props> = ({ setList }) => {
 					<ModalBody>
 						<div className="flex items-center text-sm tracking-tight gap-x-2">
 							<DatePicker
-								selected={
-									formik.values.day
-										? moment(formik.values.day, 'DD/MM/YYYY HH:mm').toDate()
-										: null
-								}
+								selected={formik.values.day || null}
 								onChange={(date) => {
-									formik.setFieldValue(
-										'day',
-										date ? moment(date).format('DD/MM/YYYY HH:mm') : null
-									)
+									formik.setFieldValue('day', date || null)
 								}}
 								dateFormat={'dd/MM/yyyy HH:mm'}
 								isClearable
@@ -80,7 +74,7 @@ const Add: FC<Props> = ({ setList }) => {
 								filterDate={blockFuture}
 							/>
 							<span className="text-danger-400 text-xs">
-								{formik.errors.day}
+								{ifIsString(formik.errors.day)}
 							</span>
 						</div>
 

@@ -24,3 +24,6 @@ export const getQuery = (request: NextRequest) => {
 }
 
 export const blockFuture = (date: Date) => moment(date).isSameOrBefore(moment())
+
+export const ifIsString = (val: any) =>
+	typeof val === 'string' ? val : undefined

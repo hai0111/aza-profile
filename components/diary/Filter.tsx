@@ -15,8 +15,8 @@ import { LuFilter } from 'react-icons/lu'
 interface Props {
 	setDataSearch: Dispatch<
 		SetStateAction<{
-			fromDate: null | string
-			toDate: null | string
+			fromDate: null | Date
+			toDate: null | Date
 		}>
 	>
 }
@@ -42,8 +42,8 @@ const Filter: FC<Props> = ({ setDataSearch }) => {
 
 	const handleSearch = () => {
 		setDataSearch({
-			fromDate: fromDate ? moment(fromDate).format('DD/MM/YYYY') : null,
-			toDate: toDate ? moment(toDate).format('DD/MM/YYYY') : null,
+			fromDate,
+			toDate,
 		})
 		onClose()
 	}

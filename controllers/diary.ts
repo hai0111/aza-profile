@@ -46,8 +46,8 @@ class DiaryController {
 	}) {
 		let queryByDate: any = {}
 		const query: any = {}
-		if (fromDate) queryByDate.$gte = fromDate + ' 00:00'
-		if (toDate) queryByDate.$lte = toDate + ' 23:59'
+		if (fromDate) queryByDate.$gte = moment(fromDate).startOf('D').toDate()
+		if (toDate) queryByDate.$lte = moment(toDate).endOf('D').toDate()
 
 		if (Object.keys(queryByDate).length) query.day = queryByDate
 

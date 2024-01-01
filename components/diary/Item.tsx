@@ -1,5 +1,6 @@
 'use client'
 
+import { blockFuture, ifIsString } from '@/utils'
 import {
 	Button,
 	CircularProgress,
@@ -9,7 +10,8 @@ import {
 	DropdownTrigger,
 	Textarea,
 } from '@nextui-org/react'
-import { FC, memo, useRef, useState } from 'react'
+import moment from 'moment'
+import { FC, memo, useRef } from 'react'
 import { FaTrash } from 'react-icons/fa6'
 import { IoMdClose } from 'react-icons/io'
 import { IoCheckmark } from 'react-icons/io5'
@@ -17,14 +19,12 @@ import { MdEdit } from 'react-icons/md'
 import { PiStarFill, PiStarThin } from 'react-icons/pi'
 import { TbDots } from 'react-icons/tb'
 import { CSSTransition } from 'react-transition-group'
-import diaryFormik from './diaryFormik'
-import moment from 'moment'
 import DatePicker from '../DatePicker'
-import { blockFuture } from '@/utils'
+import diaryFormik from './diaryFormik'
 
 export interface IDataDiary {
 	_id: number
-	day: string
+	day: Date
 	interest: boolean
 	content: string
 }
@@ -76,28 +76,18 @@ const DiaryItem: FC<Props> = ({
 						{editable ? (
 							<div className="flex items-center">
 								<DatePicker
-									selected={
-										formik.values.day
-											? moment(formik.values.day, 'DD/MM/YYYY HH:mm').toDate()
-											: undefined
-									}
-									onChange={(date) =>
-										formik.setFieldValue(
-											'day',
-											date ? moment(date).format('DD/MM/YYYY HH:mm') : null
-										)
-									}
+									selected={formik.values.day || undefined}
+									onChange={(date) => formik.setFieldValue('day', date)}
 									dateFormat={'dd/MM/yyyy HH:mm'}
 									showTimeInput
 									filterDate={blockFuture}
 								/>
-
 								<span className="text-danger-400 text-xs">
-									{formik.errors.day}
+									{ifIsString(formik.errors.day)}
 								</span>
 							</div>
 						) : (
-							data.day
+							moment(data.day).format('DD/MM/YYYY HH:mm')
 						)}
 					</span>
 					<CSSTransition

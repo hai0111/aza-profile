@@ -111,8 +111,8 @@ const Diary = () => {
 
 	// Data search controller
 	const [dataSearch, setDataSearch] = useState<{
-		fromDate: null | string
-		toDate: null | string
+		fromDate: null | Date
+		toDate: null | Date
 	}>({
 		fromDate: null,
 		toDate: null,

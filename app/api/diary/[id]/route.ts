@@ -1,5 +1,6 @@
 import DiaryController from '@/controllers/diary'
 import dbConnect from '@/lib/dbConnect'
+import moment from 'moment'
 
 export async function PUT(
 	request: Request,
@@ -7,6 +8,7 @@ export async function PUT(
 ) {
 	await dbConnect()
 	const body = await request.json()
+	body.day = moment(body.day).toDate()
 	return Response.json(await DiaryController.update(params.id, body))
 }
 

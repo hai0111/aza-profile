@@ -49,12 +49,16 @@ const Diary = () => {
 		return list.map((data) => ({ data, refNode: createRef<HTMLDivElement>() }))
 	}, [list])
 
-	const { loading, handler: getData } = useLoad(async () => {
+	const { loading, handler: getData } = useLoad(async (init = list) => {
 		pageInfo.current.index += 1
 		const res = await myAxios.get('/api/diary', {
 			params: { ...pageInfo.current, ...dataSearch },
 		})
-		setList((arr) => [...arr, ...res.data.items])
+		res.data.items.forEach(
+			(item: IDataDiary) => (item.day = moment(item.day).toDate())
+		)
+
+		setList([...init, ...res.data.items])
 		const { size, index, totalRecords } = res.data.page
 		allowLoadmore.current =
 			(index - 1) * size + res.data.items.length < totalRecords
@@ -64,19 +68,20 @@ const Diary = () => {
 		setActiveEditable(id)
 	}, [])
 
-	const saveData = useCallback((data: IDataDiary) => {
-		apiHandler(async () => {
-			setLoadingList((arr) => arr.concat([data._id]))
-			const res = await myAxios.put(`/api/diary/${data._id}`, data)
-			setLoadingList((arr) => arr.filter((id) => id !== data._id))
+	const saveData = useCallback(async (data: IDataDiary) => {
+		console.log(data.day)
+		setLoadingList((arr) => arr.concat([data._id]))
+		await apiHandler(async () => {
+			await myAxios.put(`/api/diary/${data._id}`, data)
 			setList((arr) => {
-				findAndReplace(arr, res.data, (item) => item._id === data._id)
-				return arr
+				findAndReplace(arr, data, (item) => item._id === data._id)
+				return [...arr]
 			})
 			toast('Edited successfully', {
 				type: 'success',
 			})
 		})
+		setLoadingList((arr) => arr.filter((id) => id !== data._id))
 	}, [])
 
 	/* Delete ==================== */
@@ -122,8 +127,7 @@ const Diary = () => {
 		if (!loading) {
 			pageInfo.current.index = 0
 			allowLoadmore.current = true
-			setList([])
-			getData()
+			getData([])
 			refScroll.current.scrollToTop()
 		}
 	}, [dataSearch.fromDate, dataSearch.toDate])

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Fn } from 'three/examples/jsm/nodes/Nodes.js'
 
 const useLoad = <T = any>(
 	fn: (...p: any) => Promise<T>,

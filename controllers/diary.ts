@@ -25,7 +25,7 @@ class DiaryController {
 				throw 'Dialy not found'
 			}
 		} catch (error) {
-			throw error
+			// throw error
 		}
 	}
 

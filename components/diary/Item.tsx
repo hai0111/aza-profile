@@ -11,7 +11,7 @@ import {
 	Textarea,
 } from '@nextui-org/react'
 import moment from 'moment'
-import { FC, memo, useRef } from 'react'
+import { FC, memo, useEffect, useRef } from 'react'
 import { FaTrash } from 'react-icons/fa6'
 import { IoMdClose } from 'react-icons/io'
 import { IoCheckmark } from 'react-icons/io5'
@@ -87,7 +87,7 @@ const DiaryItem: FC<Props> = ({
 								</span>
 							</div>
 						) : (
-							moment(data.day).format('DD/MM/YYYY HH:mm')
+							moment(formik.values.day).format('DD/MM/YYYY HH:mm')
 						)}
 					</span>
 					<CSSTransition

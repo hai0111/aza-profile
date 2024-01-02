@@ -3,10 +3,10 @@ import React, { FC, ReactNode } from 'react'
 
 const layout: FC<{ children: ReactNode }> = ({ children }) => {
 	return (
-		<main>
+		<div className="pt-20">
 			<Animation3D />
 			{children}
-		</main>
+		</div>
 	)
 }
 

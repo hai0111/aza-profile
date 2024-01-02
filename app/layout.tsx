@@ -28,7 +28,7 @@ export default async function RootLayout({
 
 	return (
 		<html lang="en" className="dark">
-			<body className="bg-light dark:bg-dark text-light dark:text-dark min-h-screen relative pt-20 flex flex-col">
+			<body className="bg-light dark:bg-dark text-light dark:text-dark min-h-screen relative flex flex-col">
 				<ThemeProvider>
 					<SessionProvider session={session}>
 						<ToastContainer

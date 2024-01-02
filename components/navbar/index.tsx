@@ -23,8 +23,8 @@ interface INavLink {
 
 const navLinks: INavLink[] = [
 	{
-		link: '/post',
-		text: 'Post',
+		link: '/posts',
+		text: 'Posts',
 	},
 	{
 		link: 'https://github.com/hai0111?tab=repositories',

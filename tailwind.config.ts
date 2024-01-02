@@ -28,9 +28,15 @@ const config: Config = {
 					'0%': { transform: 'scaleY(0)' },
 					'100': { transform: 'scaleY(100%)' },
 				},
+				blink: {
+					'0%': { opacity: '0' },
+					'50%': { opacity: '0' },
+					'100': { opacity: '1' },
+				},
 			},
 			animation: {
 				'expand-y': 'expand-y 1s ease-in-out',
+				blink: 'blink 800ms ease infinite',
 			},
 		},
 	},

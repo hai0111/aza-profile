@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ReactNode } from 'react'
+import { ReactNode, useContext, useEffect, useState } from 'react'
 import { IoLogoGithub, IoMenu } from 'react-icons/io5'
 import Logo from './Logo'
 import ThemeToggleButton from './ToggleTheme'
@@ -13,6 +13,7 @@ import {
 	DropdownMenu,
 	DropdownTrigger,
 } from '@nextui-org/react'
+import { SessionContext } from '@/utils/session'
 
 interface INavLink {
 	text: string
@@ -32,19 +33,27 @@ const navLinks: INavLink[] = [
 	},
 ]
 
-if (process.env.NODE_ENV === 'development')
-	navLinks.unshift({
-		link: '/diary',
-		text: 'Diary',
-	})
-
 const NavbarHeader = () => {
+	const session = useContext(SessionContext)
+	const [navList, setNavList] = useState<INavLink[]>(navLinks)
+	useEffect(() => {
+		if (!!session)
+			setNavList(
+				[
+					{
+						link: '/diary',
+						text: 'Diary',
+					},
+				].concat(navLinks)
+			)
+	}, [])
+
 	return (
 		<header className="flex justify-center backdrop-blur-md bg-white bg-opacity-25 dark:bg-transparent fixed top-0 left-0 right-0 z-20">
 			<main className="flex items-center w-full max-w-[768px] p-2">
 				<Logo />
 				<div className="ml-5 hidden sm:inline-flex">
-					{navLinks.map((item) => (
+					{navList.map((item) => (
 						<Link
 							href={item.link}
 							key={item.link}

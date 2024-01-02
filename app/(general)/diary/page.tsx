@@ -7,6 +7,7 @@ import DairyItem, { IDataDiary } from '@/components/diary/Item'
 import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
 import { findAndReplace } from '@/utils'
+import { checkAuth } from '@/utils/CheckAuth'
 import ClientOnly from '@/utils/ClientOnly'
 import InfinitieScroll from '@/utils/InfinitieScroll'
 import {
@@ -27,11 +28,13 @@ import {
 	useRef,
 	useState,
 } from 'react'
-import ReactDatePicker from 'react-datepicker'
 import { toast } from 'react-toastify'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const Diary = () => {
+	// Check auth and navigate if failed
+	checkAuth()
+
 	const [activeEditable, setActiveEditable] = useState<number | null>(null)
 
 	const pageInfo = useRef({
@@ -69,7 +72,6 @@ const Diary = () => {
 	}, [])
 
 	const saveData = useCallback(async (data: IDataDiary) => {
-		console.log(data.day)
 		setLoadingList((arr) => arr.concat([data._id]))
 		await apiHandler(async () => {
 			await myAxios.put(`/api/diary/${data._id}`, data)

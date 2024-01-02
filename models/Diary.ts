@@ -1,4 +1,3 @@
-import moment from 'moment'
 import mongoose, { Schema } from 'mongoose'
 
 export interface IDiary {

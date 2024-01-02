@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { getServerSession } from 'next-auth'
 import { NextRequest } from 'next/server'
 
 export const findAndReplace = <T = any,>(
@@ -27,3 +28,13 @@ export const blockFuture = (date: Date) => moment(date).isSameOrBefore(moment())
 
 export const ifIsString = (val: any) =>
 	typeof val === 'string' ? val : undefined
+
+export const checkAuthAPI = async (fn: Function) => {
+	const session = await getServerSession()
+	if (!session)
+		return Response.json(null, {
+			status: 403,
+			statusText: 'Permission denied',
+		})
+	return await fn()
+}

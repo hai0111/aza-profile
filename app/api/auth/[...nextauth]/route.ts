@@ -3,6 +3,7 @@ import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import AdminModel from '@/models/Admin'
 import { compare } from 'bcryptjs'
+import dbConnect from '@/lib/dbConnect'
 
 const handler = NextAuth({
 	providers: [
@@ -12,6 +13,7 @@ const handler = NextAuth({
 				password: {},
 			},
 			async authorize(credentials, req) {
+				await dbConnect()
 				const user = await AdminModel.findOne({
 					username: credentials?.username,
 				})

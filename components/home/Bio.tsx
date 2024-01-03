@@ -24,14 +24,14 @@ const Bios: { time: string; content: ReactNode }[] = [
 		content: 'Commenced the first internship term at Diligo Holding.',
 	},
 	{
-		time: '09/2022',
+		time: '11/2021',
 		content:
-			"Graduated with a Bachelor's degree in Applied Engineering, specializing in Information Technology.",
+			'Became a front-end developer at Xtel Company - a firm that undertakes numerous projects across various fields',
 	},
 	{
 		time: '09/2022',
 		content:
-			'Became a front-end developer at Xtel Company - a firm that undertakes numerous projects across various fields',
+			"Graduated with a Bachelor's degree in Applied Engineering, specializing in Information Technology.",
 	},
 ]
 

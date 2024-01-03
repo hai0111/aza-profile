@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 import SessionProvider from '@/utils/session'
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
 	title: 'Aza - Home',
@@ -25,11 +26,13 @@ export default async function RootLayout({
 	dbConnect()
 
 	const session = await getServerSession()
+	const cookieStore = cookies()
+	const theme = cookieStore.get('theme')?.value || 'dark'
 
 	return (
 		<html lang="en" className="dark">
 			<body className="bg-light dark:bg-dark text-light dark:text-dark min-h-screen relative flex flex-col">
-				<ThemeProvider>
+				<ThemeProvider initialValue={theme}>
 					<SessionProvider session={session}>
 						<ToastContainer
 							hideProgressBar

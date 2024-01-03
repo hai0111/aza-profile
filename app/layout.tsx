@@ -22,9 +22,6 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
-	// Connect DB immediately
-	dbConnect()
-
 	const session = await getServerSession()
 	const cookieStore = cookies()
 	const theme = cookieStore.get('theme')?.value || 'dark'

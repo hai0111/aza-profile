@@ -35,6 +35,10 @@ input {
 	}
 }
 
+body::-webkit-scrollbar {
+	display: none;
+}
+
 .custom-scroll::-webkit-scrollbar {
 	width: 5px;
 	height: 0;

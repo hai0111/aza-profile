@@ -1,16 +1,16 @@
 import Footer from '@/components/Footer'
 import Navbar from '@/components/navbar'
 import dbConnect from '@/lib/dbConnect'
+import SessionProvider from '@/utils/session'
 import ThemeProvider from '@/utils/theme'
 import 'animate.css'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
+import { cookies } from 'next/headers'
 import 'react-datepicker/dist/react-datepicker.min.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
-import SessionProvider from '@/utils/session'
-import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
 	title: 'Aza - Home',

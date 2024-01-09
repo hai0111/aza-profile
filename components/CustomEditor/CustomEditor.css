@@ -1,0 +1,24 @@
+.ck.ck-editor {
+	border-radius: var(--nextui-radius-medium);
+	overflow: hidden;
+	color: inherit !important;
+	background-color: hsl(
+		var(--nextui-default-100) /
+			var(--nextui-default-100-opacity, var(--tw-bg-opacity))
+	) !important;
+}
+
+.ck-editor *:not(.ck-widget, .ck-widget *) {
+	color: inherit !important;
+	background-color: transparent !important;
+	border: none !important;
+	outline: none !important;
+}
+
+.ck .ck-content {
+	min-height: 300px;
+}
+
+.ck-powered-by {
+	display: none !important;
+}

@@ -54,7 +54,7 @@ const Diary = () => {
 
 	const { loading, handler: getData } = useLoad(async (init = list) => {
 		pageInfo.current.index += 1
-		const res = await myAxios.get('/api/diary', {
+		const res = await myAxios.get('/diary', {
 			params: { ...pageInfo.current, ...dataSearch },
 		})
 		res.data.items.forEach(
@@ -74,7 +74,7 @@ const Diary = () => {
 	const saveData = useCallback(async (data: IDataDiary) => {
 		setLoadingList((arr) => arr.concat([data._id]))
 		await apiHandler(async () => {
-			await myAxios.put(`/api/diary/${data._id}`, data)
+			await myAxios.put(`/diary/${data._id}`, data)
 			setList((arr) => {
 				findAndReplace(arr, data, (item) => item._id === data._id)
 				return [...arr]
@@ -104,7 +104,7 @@ const Diary = () => {
 		onClose()
 		apiHandler(async () => {
 			setLoadingList((arr) => arr.concat([idDelete.current!]))
-			await myAxios.delete(`/api/diary/${idDelete.current}`)
+			await myAxios.delete(`/diary/${idDelete.current}`)
 			setList((arr) => arr.filter(({ _id }) => _id !== idDelete.current))
 			setLoadingList((arr) => arr.filter((id) => id !== idDelete.current))
 			toast('Deleted successfully', {

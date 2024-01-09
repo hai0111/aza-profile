@@ -1,6 +1,5 @@
 import Footer from '@/components/Footer'
 import Navbar from '@/components/navbar'
-import dbConnect from '@/lib/dbConnect'
 import SessionProvider from '@/utils/session'
 import ThemeProvider from '@/utils/theme'
 import 'animate.css'

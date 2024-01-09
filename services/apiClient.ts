@@ -1,8 +1,8 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 const myAxios = axios.create({
-	baseURL: '/',
-	timeout: 5000,
+	baseURL: '/api',
+	timeout: 10000,
 })
 
 myAxios.interceptors.request.use((config: InternalAxiosRequestConfig) => {

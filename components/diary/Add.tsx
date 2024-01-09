@@ -26,7 +26,7 @@ const Add: FC<Props> = ({ setList }) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const { loading, handler: onSubmit } = useLoad(async (values) => {
 		try {
-			const res = await myAxios.post('/api/diary', values)
+			const res = await myAxios.post('/diary', values)
 			toast('Added successfully', {
 				type: 'success',
 			})

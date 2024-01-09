@@ -1,6 +1,6 @@
 import DiaryModel, { IDiary } from '@/models/Diary'
 import moment from 'moment'
-import { Document, Query } from 'mongoose'
+import { Document } from 'mongoose'
 
 class DiaryController {
 	static async create(body: IDiary) {

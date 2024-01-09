@@ -36,6 +36,9 @@ function CustomEditor() {
 			editor={Editor}
 			config={{
 				extraPlugins: [MyCustomUploadAdapterPlugin],
+				toolbar: {
+					shouldNotGroupWhenFull: true,
+				},
 			}}
 			data={data}
 			onChange={(event, editor) => {

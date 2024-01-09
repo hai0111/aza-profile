@@ -6,10 +6,11 @@
 import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
-import { Bold, Italic } from '@ckeditor/ckeditor5-basic-styles';
+import { Bold, Code, Italic } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
 import { CKBox } from '@ckeditor/ckeditor5-ckbox';
 import { CloudServices } from '@ckeditor/ckeditor5-cloud-services';
+import { CodeBlock } from '@ckeditor/ckeditor5-code-block';
 import type { EditorConfig } from '@ckeditor/ckeditor5-core';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { Heading } from '@ckeditor/ckeditor5-heading';
@@ -22,7 +23,7 @@ import {
 	ImageUpload,
 	PictureEditing
 } from '@ckeditor/ckeditor5-image';
-import { Indent } from '@ckeditor/ckeditor5-indent';
+import { Indent, IndentBlock } from '@ckeditor/ckeditor5-indent';
 import { Link } from '@ckeditor/ckeditor5-link';
 import { List } from '@ckeditor/ckeditor5-list';
 import { MediaEmbed } from '@ckeditor/ckeditor5-media-embed';
@@ -42,6 +43,8 @@ class Editor extends ClassicEditor {
 		Bold,
 		CKBox,
 		CloudServices,
+		Code,
+		CodeBlock,
 		Essentials,
 		Heading,
 		Image,
@@ -51,6 +54,7 @@ class Editor extends ClassicEditor {
 		ImageToolbar,
 		ImageUpload,
 		Indent,
+		IndentBlock,
 		Italic,
 		Link,
 		List,
@@ -70,22 +74,25 @@ class Editor extends ClassicEditor {
 			items: [
 				'undo',
 				'redo',
+				'|',
 				'heading',
 				'|',
 				'bold',
 				'italic',
 				'link',
-				'blockQuote',
+				'bulletedList',
+				'numberedList',
 				'|',
 				'outdent',
 				'indent',
 				'|',
-				'numberedList',
-				'bulletedList',
+				'codeBlock',
+				'code',
 				'|',
 				'imageUpload',
-				'mediaEmbed',
-				'insertTable'
+				'blockQuote',
+				'insertTable',
+				'mediaEmbed'
 			]
 		},
 		language: 'en',

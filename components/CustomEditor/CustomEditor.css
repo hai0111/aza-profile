@@ -8,9 +8,12 @@
 	) !important;
 }
 
-.ck-editor *:not(.ck-widget, .ck-widget *) {
+.ck-editor *:not(.ck-widget, .ck-widget *, pre) {
+	background-color: inherit !important;
+}
+
+.ck-editor * {
 	color: inherit !important;
-	background-color: transparent !important;
 	border: none !important;
 	outline: none !important;
 }

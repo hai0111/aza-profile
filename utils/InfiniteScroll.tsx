@@ -17,13 +17,13 @@ interface Props {
 	className?: string
 	children: ReactNode
 	loadEl?: ReactNode
-	allowScorll: boolean
+	allowScroll: boolean
 }
 
-const InfinitieScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
+const InfiniteScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 	forwardRef(
 		(
-			{ loadMore, children, className, allowScorll, loadEl = 'Loading...' },
+			{ loadMore, children, className, allowScroll, loadEl = 'Loading...' },
 			ref
 		) => {
 			const refScrollBox = useRef<HTMLDivElement>(null)
@@ -33,7 +33,7 @@ const InfinitieScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 				const { scrollTop, offsetHeight, scrollHeight } = e.currentTarget
 				const checkPosition = scrollTop + offsetHeight > scrollHeight - 50
 				const isDown = scrollTop > lastScroll.current
-				const shouldScorll = allowScorll && checkPosition && isDown && !loading
+				const shouldScorll = allowScroll && checkPosition && isDown && !loading
 				if (shouldScorll) loadMoreHandler()
 				lastScroll.current = scrollTop
 			}
@@ -66,4 +66,4 @@ const InfinitieScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 		}
 	)
 
-export default InfinitieScroll
+export default InfiniteScroll

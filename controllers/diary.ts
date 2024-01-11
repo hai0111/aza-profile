@@ -3,18 +3,18 @@ import moment from 'moment'
 import { Document } from 'mongoose'
 
 class DiaryController {
-	static async create(body: IDiary) {
+	async create(body: IDiary) {
 		const user = new DiaryModel(body)
 		return await user.save()
 	}
 
-	static async findById(id: string) {
+	async findById(id: string) {
 		return await DiaryModel.findById(id)
 	}
 
-	static async update(id: string, data: any) {
+	async update(id: string, data: any) {
 		try {
-			const dialy = await DiaryController.findById(id)
+			const dialy = await this.findById(id)
 			if (dialy) {
 				for (const key in data) {
 					if (typeof data[key] === typeof dialy[key as keyof Document])
@@ -29,11 +29,11 @@ class DiaryController {
 		}
 	}
 
-	static async totalRecords() {
+	async totalRecords() {
 		return await DiaryModel.countDocuments({})
 	}
 
-	static async list({
+	async list({
 		fromDate,
 		toDate,
 		size = 20,
@@ -69,9 +69,9 @@ class DiaryController {
 		}
 	}
 
-	static async delete(id: string) {
+	async delete(id: string) {
 		return await DiaryModel.findByIdAndDelete(id)
 	}
 }
 
-export default DiaryController
+export default new DiaryController()

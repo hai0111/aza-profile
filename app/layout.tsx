@@ -6,6 +6,7 @@ import 'animate.css'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { cookies } from 'next/headers'
+import { PrimeReactProvider } from 'primereact/api'
 import 'react-datepicker/dist/react-datepicker.min.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -21,7 +22,6 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const session = await getServerSession()
 	const cookieStore = cookies()
 	const theme = cookieStore.get('theme')?.value || 'dark'
 
@@ -29,18 +29,20 @@ export default async function RootLayout({
 		<html lang="en" className="dark">
 			<body className="bg-light dark:bg-dark text-light dark:text-dark min-h-screen relative flex flex-col">
 				<ThemeProvider initialValue={theme}>
-					<SessionProvider session={session}>
-						<ToastContainer
-							hideProgressBar
-							theme="light"
-							className={'leading-none text-sm'}
-							toastClassName="p-0"
-							toastStyle={{ minHeight: 0 }}
-						/>
-						<Navbar />
-						<main className="grow relative z-10">{children}</main>
-						<Footer />
-					</SessionProvider>
+					<PrimeReactProvider>
+						<SessionProvider session={await getServerSession()}>
+							<ToastContainer
+								hideProgressBar
+								theme="light"
+								className={'leading-none text-sm'}
+								toastClassName="p-0"
+								toastStyle={{ minHeight: 0 }}
+							/>
+							<Navbar />
+							<main className="grow relative z-10">{children}</main>
+							<Footer />
+						</SessionProvider>
+					</PrimeReactProvider>
 				</ThemeProvider>
 			</body>
 		</html>

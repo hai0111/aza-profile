@@ -1,0 +1,37 @@
+.item-autocomplete li {
+	padding: 0.5rem 0.75rem;
+	border-radius: 6px;
+}
+
+.item-autocomplete li:hover {
+	background-color: hsl(
+		var(--nextui-default) / var(--nextui-default-opacity, var(--tw-bg-opacity))
+	) !important;
+}
+
+.item-autocomplete li[data-p-highlight='true'] {
+	background-color: hsl(
+		var(--nextui-default) / var(--nextui-default-opacity, var(--tw-bg-opacity))
+	) !important;
+}
+
+.custom-autocomplete li[data-pc-section='token'] {
+	background-color: rgb(251 146 60 / var(--tw-bg-opacity)) !important;
+	padding: 0.1rem 0.5rem;
+	border-radius: 6px;
+	display: inline-flex;
+	gap: 0.3rem;
+}
+
+.custom-autocomplete input {
+	padding: 0.3rem;
+}
+
+.custom-autocomplete ul[class*='p-autocomplete-multiple-container'] {
+	display: flex;
+	gap: 0.3rem;
+}
+
+.custom-autocomplete svg {
+	right: 1rem;
+}

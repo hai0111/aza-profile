@@ -1,44 +1,41 @@
-import PostModel, { IPost, IPostRespon } from '@/models/Post'
+import PostModel, { IPost, IPostResponse } from '@/models/Post'
 import moment from 'moment'
 
-export class PostController {
-	static async create(body: IPost) {
+class PostController {
+	async create(body: IPost) {
 		const post = new PostModel(body)
 		return await post.save()
 	}
 
-	static async delete(id: string) {
+	async delete(id: string) {
 		return await PostModel.findByIdAndDelete(id)
 	}
 
-	static async update(body: IPostRespon) {
-		return await PostModel.findByIdAndUpdate(body._id, body)
+	async update(id: string, body: IPostResponse) {
+		return await PostModel.findByIdAndUpdate(id, body)
 	}
 
-	static async totalRecords(query: { [key: string]: any }) {
+	async totalRecords(query: { [key: string]: any }) {
 		return await PostModel.countDocuments(query)
 	}
 
-	static async list({
+	async list({
 		fromDate,
 		toDate,
-		slug,
 		size = 20,
 		index = 1,
 	}: {
 		fromDate: null | string
 		toDate: null | string
-		slug: null | string
 		size?: number
 		index?: number
 	}) {
-		let queryByDate: any = {}
+		let queryByCreatedAt: any = {}
 		const query: any = {}
 
-		if (slug) query.slug = slug
-		if (fromDate) queryByDate.$gte = moment(fromDate).startOf('D').toDate()
-		if (toDate) queryByDate.$lte = moment(toDate).endOf('D').toDate()
-		if (Object.keys(queryByDate).length) query.day = queryByDate
+		if (fromDate) queryByCreatedAt.$gte = moment(fromDate).startOf('D').toDate()
+		if (toDate) queryByCreatedAt.$lte = moment(toDate).endOf('D').toDate()
+		if (Object.keys(queryByCreatedAt).length) query.createAt = queryByCreatedAt
 
 		try {
 			const data = await PostModel.find(query)
@@ -59,3 +56,6 @@ export class PostController {
 		}
 	}
 }
+
+const postController = new PostController()
+export default postController

@@ -1,21 +1,15 @@
-import Container from '@/components/Container'
-import CustomEditor from '@/components/CustomEditor'
 import Banner from '@/components/posts/Banner'
+import CreatePostForm from '@/components/posts/CreateForm'
 import ClientOnly from '@/utils/ClientOnly'
-import { Input } from '@nextui-org/react'
+import React from 'react'
 
 const page = () => {
 	return (
 		<div>
 			<Banner />
-			<Container className="pt-4">
-				<Input placeholder="Title" size="sm" />
-				<div className="mt-4">
-					<ClientOnly>
-						<CustomEditor />
-					</ClientOnly>
-				</div>
-			</Container>
+			<ClientOnly>
+				<CreatePostForm />
+			</ClientOnly>
 		</div>
 	)
 }

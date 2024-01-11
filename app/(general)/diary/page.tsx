@@ -9,7 +9,8 @@ import { apiHandler, useLoad } from '@/services/apiHandler'
 import { findAndReplace } from '@/utils'
 import { checkAuth } from '@/utils/CheckAuth'
 import ClientOnly from '@/utils/ClientOnly'
-import InfinitieScroll from '@/utils/InfinitieScroll'
+import InfiniteScroll from '@/utils/InfiniteScroll'
+
 import {
 	Button,
 	Modal,
@@ -42,7 +43,7 @@ const Diary = () => {
 		size: 10,
 	})
 
-	const allowLoadmore = useRef<boolean>(true)
+	const allowLoadMore = useRef<boolean>(true)
 
 	const refScroll = useRef({ scrollToTop() {} })
 
@@ -63,7 +64,7 @@ const Diary = () => {
 
 		setList([...init, ...res.data.items])
 		const { size, index, totalRecords } = res.data.page
-		allowLoadmore.current =
+		allowLoadMore.current =
 			(index - 1) * size + res.data.items.length < totalRecords
 	})
 
@@ -128,7 +129,7 @@ const Diary = () => {
 	useEffect(() => {
 		if (!loading) {
 			pageInfo.current.index = 0
-			allowLoadmore.current = true
+			allowLoadMore.current = true
 			getData([])
 			refScroll.current.scrollToTop()
 		}
@@ -148,8 +149,8 @@ const Diary = () => {
 			</div>
 
 			<ClientOnly>
-				<InfinitieScroll
-					allowScorll={allowLoadmore.current}
+				<InfiniteScroll
+					allowScroll={allowLoadMore.current}
 					className="max-h-[600px]"
 					loadMore={getData}
 					ref={refScroll}
@@ -177,7 +178,7 @@ const Diary = () => {
 							</CSSTransition>
 						))}
 					</TransitionGroup>
-				</InfinitieScroll>
+				</InfiniteScroll>
 			</ClientOnly>
 			<Modal isOpen={isOpenDelete} onOpenChange={onOpenChange}>
 				<ModalContent>

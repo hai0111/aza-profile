@@ -3,12 +3,11 @@ import mongoose, { Schema } from 'mongoose'
 export interface IPost {
 	content: string
 	title: string
-	thumnail: string
-	slug: string
-	relateds?: Schema.Types.ObjectId[]
+	thumbnail: string
+	postsRelated?: Schema.Types.ObjectId[]
 }
 
-export interface IPostRespon extends IPost {
+export interface IPostResponse extends IPost {
 	_id: string
 	createAt: string
 	updateAt: string
@@ -26,15 +25,11 @@ const PostSchema = new Schema<IPostSchema>(
 			type: String,
 			required: [true, 'Content required'],
 		},
-		thumnail: {
+		thumbnail: {
 			type: String,
 			required: [true, 'Content required'],
 		},
-		slug: {
-			type: String,
-			required: [true, 'Content required'],
-		},
-		relateds: {
+		postsRelated: {
 			type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
 		},
 	},

@@ -1,9 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import myAxios from '@/services/apiClient'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import Editor from 'ckeditor5-custom-build'
+import { FC, memo, useState } from 'react'
 import './CustomEditor.css'
-import myAxios from '@/services/apiClient'
 
 class MyUploadAdapter {
 	constructor(public loader: any) {
@@ -23,14 +23,17 @@ class MyUploadAdapter {
 	abort() {}
 }
 
-function MyCustomUploadAdapterPlugin(editor: any) {
+const MyCustomUploadAdapterPlugin = function (editor: any) {
 	editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
 		return new MyUploadAdapter(loader)
 	}
 }
 
-function CustomEditor() {
+const CustomEditor: FC<{ onChange?(value: string): void }> = function ({
+	onChange,
+}) {
 	const [data, setData] = useState<string>('')
+
 	return (
 		<CKEditor
 			editor={Editor}
@@ -44,8 +47,9 @@ function CustomEditor() {
 			onChange={(event, editor) => {
 				const data = editor.getData()
 				setData(data)
+				if (onChange) onChange(data)
 			}}
 		/>
 	)
 }
-export default CustomEditor
+export default memo(CustomEditor)

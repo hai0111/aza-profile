@@ -1,8 +1,8 @@
 import React from 'react'
 import PostItem from './Item'
-import { IPostRespon } from '@/models/Post'
+import { IPostResponse } from '@/models/Post'
 
-const data: IPostRespon[] = []
+const data: IPostResponse[] = []
 
 const RelatedArticles = () => {
 	return (

@@ -54,6 +54,22 @@ export const toSlug = (str: string) => {
 	return str
 }
 
+export const findAndToggle = <T = any,>(
+	array: T[],
+	item: T,
+	fn: (item: T) => boolean
+) => {
+	for (let index = 0; index < array.length; index++) {
+		if (fn(array[index])) {
+			array.splice(index, 1)
+			return
+		}
+	}
+
+	array.push(item)
+	return
+}
+
 export const findAndReplace = <T = any,>(
 	array: T[],
 	item: T,

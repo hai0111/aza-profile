@@ -8,6 +8,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { GoChevronRight } from 'react-icons/go'
 
+import '@/styles/ck-editor.scss'
+import '@/components/CustomEditor/CustomEditor.css'
+
 const page = ({ params }: { params: { id: string } }) => {
 	const [data, setData] = useState<IPostResponse | null>(null)
 	useEffect(() => {
@@ -31,13 +34,14 @@ const page = ({ params }: { params: { id: string } }) => {
 					</Link>
 					<GoChevronRight /> {data.title}
 				</h2>
-
-				<div
-					className="pt-10"
-					dangerouslySetInnerHTML={{ __html: data.content }}
-				></div>
+				<div className="ck ck-editor__main">
+					<div
+						className="pt-10 ck-content"
+						dangerouslySetInnerHTML={{ __html: data.content }}
+					/>
+				</div>
 				<RelatedArticles items={data.postsRelated} />
-			</Container> 
+			</Container>
 		)
 	)
 }

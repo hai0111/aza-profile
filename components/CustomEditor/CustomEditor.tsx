@@ -4,7 +4,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import Editor from 'ckeditor5-custom-build'
 import { FC, memo, useState } from 'react'
 import './CustomEditor.css'
- 
+
 class MyUploadAdapter {
 	constructor(public loader: any) {
 		this.loader = loader
@@ -14,7 +14,7 @@ class MyUploadAdapter {
 		const formData = new FormData()
 
 		formData.set('file', file)
- 
+
 		const res = await myAxios.post('/upload', formData)
 		return {
 			default: res.data?.url,

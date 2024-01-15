@@ -7,14 +7,15 @@ export interface IPost {
 	postsRelated?: string[]
 }
 
-export interface IPostResponse extends IPostComplete {
+export interface IPostComplete extends IPost {
+	slug: string
+}
+
+export interface IPostResponse extends Omit<IPostComplete, 'postsRelated'> {
 	_id: string
 	createAt: string
 	updateAt: string
-}
-
-export interface IPostComplete extends IPost {
-	slug: string
+	postsRelated: IPostResponse[]
 }
 
 interface IPostSchema extends Schema, IPostComplete {}

@@ -22,6 +22,10 @@
 	min-height: 300px;
 }
 
+.ck .ck-content ul {
+	padding-left: 26px !important;
+}
+
 .ck-powered-by {
 	display: none !important;
 }

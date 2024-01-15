@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const useLoad = <T = any>(
 	fn: (...p: any) => Promise<T>,
-	errorHandler?: () => void
+	errorHandler?: (err?: any) => any
 ) => {
 	const [loading, setLoading] = useState(false)
 	return {
@@ -18,13 +18,12 @@ const useLoad = <T = any>(
 
 const apiHandler = async <T = any>(
 	fn: () => Promise<T>,
-	errorHandler?: () => void
+	errorHandler?: (err?: any) => any
 ) => {
 	try {
 		await fn()
 	} catch (err) {
-		console.log(err)
-		if (errorHandler) errorHandler()
+		if (errorHandler) errorHandler(err)
 	}
 }
 

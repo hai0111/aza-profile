@@ -21,9 +21,7 @@ html:is(.dark) {
 }
 
 button,
-button:hover,
-a[href],
-a[href]:hover,
+a,
 input {
 	outline: none;
 	color: inherit;

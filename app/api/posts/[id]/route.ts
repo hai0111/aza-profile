@@ -3,6 +3,15 @@ import dbConnect from '@/lib/dbConnect'
 import { checkAuthAPI } from '@/utils'
 import moment from 'moment'
 
+export async function GET(
+	request: Request,
+	{ params }: { params: { id: string } }
+) {
+	await dbConnect()
+	console.log(params.id)
+	return Response.json(await postController.detail(params.id))
+}
+
 export async function PUT(
 	request: Request,
 	{ params }: { params: { id: string } }
@@ -19,8 +28,8 @@ export async function DELETE(
 	request: Request,
 	{ params }: { params: { id: string } }
 ) {
-	// return await checkAuthAPI(async () => {
-	await dbConnect()
-	return Response.json(await postController.delete(params.id))
-	// })
+	return await checkAuthAPI(async () => {
+		await dbConnect()
+		return Response.json(await postController.delete(params.id))
+	})
 }

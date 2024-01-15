@@ -1,6 +1,6 @@
 import postController from '@/controllers/post'
 import dbConnect from '@/lib/dbConnect'
-import { checkAuthAPI, getQuery } from '@/utils'
+import { checkAuthAPI, getQuery, toSlug } from '@/utils'
 import { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
 	return await checkAuthAPI(async () => {
 		await dbConnect()
 		const body = await request.json()
+		body.slug = toSlug(body.title)
 		const res = await postController.create(body)
 		return Response.json(res)
 	})

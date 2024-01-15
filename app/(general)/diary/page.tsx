@@ -8,7 +8,6 @@ import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
 import { findAndReplace } from '@/utils'
 import { checkAuth } from '@/utils/CheckAuth'
-import ClientOnly from '@/utils/ClientOnly'
 import InfiniteScroll from '@/utils/InfiniteScroll'
 
 import {
@@ -36,19 +35,14 @@ const Diary = () => {
 	// Check auth and navigate if failed
 	checkAuth()
 
-	const [activeEditable, setActiveEditable] = useState<number | null>(null)
-
+	// Controller fetch data
 	const pageInfo = useRef({
 		index: 0,
 		size: 10,
 	})
-
 	const allowLoadMore = useRef<boolean>(true)
-
 	const refScroll = useRef({ scrollToTop() {} })
-
 	const [list, setList] = useState<IDataDiary[]>([])
-
 	const listRender = useMemo(() => {
 		return list.map((data) => ({ data, refNode: createRef<HTMLDivElement>() }))
 	}, [list])
@@ -68,6 +62,8 @@ const Diary = () => {
 			(index - 1) * size + res.data.items.length < totalRecords
 	})
 
+	// Determines the element to be edited
+	const [activeEditable, setActiveEditable] = useState<number | null>(null)
 	const setActive = useCallback((id: number | null) => {
 		setActiveEditable(id)
 	}, [])
@@ -87,7 +83,7 @@ const Diary = () => {
 		setLoadingList((arr) => arr.filter((id) => id !== data._id))
 	}, [])
 
-	/* Delete ==================== */
+	// Delete ====================
 	const idDelete = useRef<number>()
 	const {
 		isOpen: isOpenDelete,
@@ -114,10 +110,10 @@ const Diary = () => {
 		})
 	}
 
-	// loading item controller
+	// Determines the element being loaded
 	const [loadingList, setLoadingList] = useState<number[]>([])
 
-	// Data search controller
+	// Search controller ======================================
 	const [dataSearch, setDataSearch] = useState<{
 		fromDate: null | Date
 		toDate: null | Date
@@ -148,38 +144,36 @@ const Diary = () => {
 				/>
 			</div>
 
-			<ClientOnly>
-				<InfiniteScroll
-					allowScroll={allowLoadMore.current}
-					className="max-h-[600px]"
-					loadMore={getData}
-					ref={refScroll}
-				>
-					<TransitionGroup className="flex flex-col gap-5">
-						{listRender.map(({ data, refNode }) => (
-							<CSSTransition
-								key={data._id}
-								classNames={{
-									exitActive: 'animate__animated animate__flipOutX',
-								}}
-								timeout={600}
-								nodeRef={refNode}
-							>
-								<div ref={refNode}>
-									<DairyItem
-										loading={loadingList.includes(data._id)}
-										editable={data._id === activeEditable}
-										data={data}
-										setActive={setActive}
-										saveData={saveData}
-										openDelete={onOpenDelete}
-									/>
-								</div>
-							</CSSTransition>
-						))}
-					</TransitionGroup>
-				</InfiniteScroll>
-			</ClientOnly>
+			<InfiniteScroll
+				allowScroll={allowLoadMore.current}
+				className="max-h-[600px]"
+				loadMore={getData}
+				ref={refScroll}
+			>
+				<TransitionGroup className="flex flex-col gap-5">
+					{listRender.map(({ data, refNode }) => (
+						<CSSTransition
+							key={data._id}
+							classNames={{
+								exitActive: 'animate__animated animate__flipOutX',
+							}}
+							timeout={600}
+							nodeRef={refNode}
+						>
+							<div ref={refNode}>
+								<DairyItem
+									loading={loadingList.includes(data._id)}
+									editable={data._id === activeEditable}
+									data={data}
+									setActive={setActive}
+									saveData={saveData}
+									openDelete={onOpenDelete}
+								/>
+							</div>
+						</CSSTransition>
+					))}
+				</TransitionGroup>
+			</InfiniteScroll>
 			<Modal isOpen={isOpenDelete} onOpenChange={onOpenChange}>
 				<ModalContent>
 					<ModalHeader />

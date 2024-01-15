@@ -14,8 +14,8 @@ const PostItem: FC<Props> = ({ data }) => {
 				src={data.thumbnail}
 				alt=""
 				width={300}
-				height={300}
-				className="rounded"
+				height={200}
+				className="rounded aspect-video"
 			/>
 			<div className="text-center pt-1">{data.title}</div>
 		</Link>

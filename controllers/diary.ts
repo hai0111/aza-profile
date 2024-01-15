@@ -26,7 +26,7 @@ class DiaryController {
 			}
 		} catch (error) {
 			// throw error
-		}
+		} 
 	}
 
 	async totalRecords() {
@@ -34,7 +34,7 @@ class DiaryController {
 	}
 
 	async list({
-		fromDate,
+		fromDate, 
 		toDate,
 		size = 20,
 		index = 1,

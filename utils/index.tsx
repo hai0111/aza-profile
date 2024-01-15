@@ -1,3 +1,4 @@
+import myAxios from '@/services/apiClient'
 import moment from 'moment'
 import { getServerSession } from 'next-auth'
 import { NextRequest } from 'next/server'
@@ -68,6 +69,13 @@ export const findAndToggle = <T = any,>(
 
 	array.push(item)
 	return
+}
+
+export const uploadFile = async (file: File, errCallback?: () => void) => {
+	const formData = new FormData()
+	formData.set('file', file)
+	const res = await myAxios.post('/upload', formData)
+	return res.data?.url
 }
 
 export const findAndReplace = <T = any,>(

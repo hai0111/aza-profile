@@ -4,16 +4,20 @@ export interface IPost {
 	content: string
 	title: string
 	thumbnail: string
-	postsRelated?: Schema.Types.ObjectId[]
+	postsRelated?: string[]
 }
 
-export interface IPostResponse extends IPost {
+export interface IPostResponse extends IPostComplete {
 	_id: string
 	createAt: string
 	updateAt: string
 }
 
-interface IPostSchema extends Schema, IPost {}
+export interface IPostComplete extends IPost {
+	slug: string
+}
+
+interface IPostSchema extends Schema, IPostComplete {}
 
 const PostSchema = new Schema<IPostSchema>(
 	{
@@ -22,6 +26,10 @@ const PostSchema = new Schema<IPostSchema>(
 			required: [true, 'Content required'],
 		},
 		title: {
+			type: String,
+			required: [true, 'Content required'],
+		},
+		slug: {
 			type: String,
 			required: [true, 'Content required'],
 		},

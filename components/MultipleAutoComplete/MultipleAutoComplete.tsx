@@ -1,3 +1,4 @@
+'use client'
 import clsx from 'clsx'
 import { AutoComplete } from 'primereact/autocomplete'
 import { useEffect, useState } from 'react'
@@ -13,7 +14,7 @@ const MultipleAutoComplete = <T extends {}>({
 	items: T[]
 	placeholder?: string
 	field: string
-	onSearch(query: string): Promise<void>
+	onSearch(query: string): Promise<void> | void
 	onChange(values: T[]): void
 }) => {
 	const [values, setValues] = useState<T[]>([])

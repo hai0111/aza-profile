@@ -8,7 +8,6 @@ export async function GET(
 	{ params }: { params: { id: string } }
 ) {
 	await dbConnect()
-	console.log(params.id)
 	return Response.json(await postController.detail(params.id))
 }
 

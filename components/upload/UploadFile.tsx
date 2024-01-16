@@ -9,10 +9,11 @@ import { PiUploadSimpleThin } from 'react-icons/pi'
 import { toast } from 'react-toastify'
 
 interface Props {
+	value?: string
 	onValueChange?(str: string): void
 }
 
-const UploadFile: FC<Props> = ({ onValueChange }) => {
+const UploadFile: FC<Props> = ({ onValueChange, value: valueProp }) => {
 	const [value, setValue] = useState<string>('')
 	const inputRef = useRef<HTMLInputElement>(null)
 	const clickUpload = () => {
@@ -50,6 +51,10 @@ const UploadFile: FC<Props> = ({ onValueChange }) => {
 	useEffect(() => {
 		onValueChange && onValueChange(value)
 	}, [value])
+
+	useEffect(() => {
+		setValue(valueProp || '')
+	}, [valueProp])
 
 	return (
 		<>

@@ -4,24 +4,36 @@ import { AutoComplete } from 'primereact/autocomplete'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 
+interface Props<T> {
+	items: T[]
+	placeholder?: string
+	field: string
+	onSearch(query: string): Promise<void> | void
+	onChange(values: T[]): void
+	values?: T[]
+}
+
 const MultipleAutoComplete = <T extends {}>({
 	items,
 	field,
 	onSearch,
 	placeholder,
 	onChange,
-}: {
-	items: T[]
-	placeholder?: string
-	field: string
-	onSearch(query: string): Promise<void> | void
-	onChange(values: T[]): void
-}) => {
-	const [values, setValues] = useState<T[]>([])
+	values: valuesProp,
+}: Props<T>) => {
+	let values: any
+	let setValues: any = onChange
 
-	useEffect(() => {
-		onChange(values)
-	}, [values])
+	if (valuesProp) {
+		values = valuesProp
+	} else {
+		const stateController = useState<T[]>(valuesProp || [])
+		values = stateController[0]
+		setValues = stateController[1]
+		useEffect(() => {
+			onChange(values)
+		}, [values])
+	}
 
 	return (
 		<div className="card p-fluid">

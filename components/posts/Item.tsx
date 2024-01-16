@@ -9,7 +9,7 @@ interface Props {
 
 const PostItem: FC<Props> = ({ data }) => {
 	return (
-		<Link href={`/posts/${data._id}`}>
+		<Link href={`/posts/id/${data._id}`}>
 			<Image
 				src={data.thumbnail}
 				alt=""

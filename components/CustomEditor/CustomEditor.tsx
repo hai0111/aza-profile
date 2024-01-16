@@ -2,7 +2,7 @@
 import myAxios from '@/services/apiClient'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import Editor from 'ckeditor5-custom-build'
-import { FC, memo, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import './CustomEditor.css'
 
 class MyUploadAdapter {
@@ -29,27 +29,29 @@ const MyCustomUploadAdapterPlugin = function (editor: any) {
 	}
 }
 
-const CustomEditor: FC<{ onChange?(value: string): void }> = function ({
-	onChange,
-}) {
-	const [data, setData] = useState<string>('')
+const CustomEditor: FC<{ value?: string; onChange?(value: string): void }> =
+	function ({ onChange, value }) {
+		const [data, setData] = useState<string>('')
+		useEffect(() => {
+			setData(value || '')
+		}, [value])
 
-	return (
-		<CKEditor
-			editor={Editor}
-			config={{
-				extraPlugins: [MyCustomUploadAdapterPlugin],
-				toolbar: {
-					shouldNotGroupWhenFull: true,
-				},
-			}}
-			data={data}
-			onChange={(event, editor) => {
-				const data = editor.getData()
-				setData(data)
-				if (onChange) onChange(data)
-			}}
-		/>
-	)
-}
+		return (
+			<CKEditor
+				editor={Editor}
+				config={{
+					extraPlugins: [MyCustomUploadAdapterPlugin],
+					toolbar: {
+						shouldNotGroupWhenFull: true,
+					},
+				}}
+				data={data}
+				onChange={(event, editor) => {
+					const data = editor.getData()
+					setData(data)
+					if (onChange) onChange(data)
+				}}
+			/>
+		)
+	}
 export default memo(CustomEditor)

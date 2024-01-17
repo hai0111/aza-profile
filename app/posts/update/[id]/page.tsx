@@ -7,10 +7,19 @@ import UploadFile from '@/components/upload/UploadFile'
 import { IPost, IPostResponse } from '@/models/Post'
 import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
-import useRedirect from '@/utils/useRedirect'
-import { Button, Input } from '@nextui-org/react'
+import {
+	Button,
+	Input,
+	Modal,
+	ModalBody,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	useDisclosure,
+} from '@nextui-org/react'
 import { useFormik } from 'formik'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
@@ -22,16 +31,17 @@ interface IPostBodyUpdate extends Omit<IPost, 'postsRelated'> {
 const list: IPostResponse[] = []
 
 const page = ({ params }: { params: { id: string } }) => {
+	const router = useRouter()
 	// Form controller
 	const { loading, handler: onSubmit } = useLoad(
 		async (values: IPost) => {
 			const postsRelated = (values.postsRelated as any[])?.map(({ _id }) => _id)
 			values.postsRelated = postsRelated
-			await myAxios.post('posts', { ...values, postsRelated })
+			await myAxios.put(`/posts/${idRef.current}`, { ...values, postsRelated })
 			toast('Successfully', {
 				type: 'success',
 			})
-			useRedirect('/posts')
+			router.push('/posts')
 		},
 		(err) => {
 			toast('Some thing went wrong', {
@@ -91,11 +101,38 @@ const page = ({ params }: { params: { id: string } }) => {
 	}
 
 	// Initialize update data
+	const idRef = useRef<string>()
 	useEffect(() => {
 		myAxios.get(`/posts/${params.id}`).then(({ data }) => {
 			formik.setValues(data)
+			idRef.current = data._id
 		})
 	}, [])
+
+	// Delete controller
+	const {
+		isOpen: isOpenDelete,
+		onOpen,
+		onOpenChange,
+		onClose,
+	} = useDisclosure()
+
+	const { loading: loadingDelete, handler: handleDelete } = useLoad(
+		async () => {
+			try {
+				await myAxios.delete(`/posts/${params.id}`)
+				toast('Delete successfully', {
+					type: 'success',
+				})
+				router.push('/posts')
+			} catch (err) {
+				toast('Delete failed', {
+					type: 'error',
+				})
+			}
+		}
+	)
+
 	return (
 		<>
 			<Banner />
@@ -152,8 +189,8 @@ const page = ({ params }: { params: { id: string } }) => {
 					<Link href={'/posts'}>
 						<Button size="lg">Back to Posts</Button>
 					</Link>
-					<Button size="lg" color="primary" onClick={() => formik.resetForm()}>
-						Reset form
+					<Button size="lg" color="danger" onClick={onOpen}>
+						Delete
 					</Button>
 					<Button
 						size="lg"
@@ -166,6 +203,34 @@ const page = ({ params }: { params: { id: string } }) => {
 					</Button>
 				</div>
 			</Container>
+
+			<Modal
+				isOpen={isOpenDelete}
+				onOpenChange={onOpenChange}
+				isDismissable={!loadingDelete}
+				hideCloseButton={loadingDelete}
+			>
+				<ModalContent>
+					<ModalHeader />
+					<ModalBody>Are you sure you want to delete this post?</ModalBody>
+					<ModalFooter>
+						<Button
+							isDisabled={loadingDelete}
+							className="bg-transparent"
+							onClick={onClose}
+						>
+							Cancel
+						</Button>
+						<Button
+							isLoading={loadingDelete}
+							onClick={handleDelete}
+							color="danger"
+						>
+							Delete
+						</Button>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
 		</>
 	)
 }

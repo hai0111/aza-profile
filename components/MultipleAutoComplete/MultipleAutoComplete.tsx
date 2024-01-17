@@ -1,8 +1,15 @@
 'use client'
 import clsx from 'clsx'
-import { AutoComplete } from 'primereact/autocomplete'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
+import dynamic from 'next/dynamic'
+
+const AutoComplete = dynamic(
+	async () => (await import('primereact/autocomplete')).AutoComplete,
+	{
+		ssr: false,
+	}
+)
 
 interface Props<T> {
 	items: T[]

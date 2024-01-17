@@ -7,10 +7,10 @@ import UploadFile from '@/components/upload/UploadFile'
 import { IPost, IPostResponse } from '@/models/Post'
 import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
-import useRedirect from '@/utils/useRedirect'
 import { Button, Input } from '@nextui-org/react'
 import { useFormik } from 'formik'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
@@ -18,6 +18,7 @@ import * as Yup from 'yup'
 const list: IPostResponse[] = []
 
 const page = () => {
+	const router = useRouter()
 	// Form controller
 	const { loading, handler: onSubmit } = useLoad(
 		async (values: IPost) => {
@@ -27,7 +28,7 @@ const page = () => {
 			toast('Successfully', {
 				type: 'success',
 			})
-			useRedirect('/posts')
+			router.push('/posts')
 		},
 		(err) => {
 			toast('Some thing went wrong', {
@@ -137,9 +138,6 @@ const page = () => {
 					<Link href={'/posts'}>
 						<Button size="lg">Back to Posts</Button>
 					</Link>
-					<Button size="lg" color="primary" onClick={() => formik.resetForm()}>
-						Reset form
-					</Button>
 					<Button
 						size="lg"
 						className="font-medium"

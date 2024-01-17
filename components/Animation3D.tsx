@@ -1,5 +1,6 @@
 'use client'
 
+import { CircularProgress } from '@nextui-org/react'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import {
@@ -8,7 +9,6 @@ import {
 	OrbitControls,
 	RoomEnvironment,
 } from 'three/examples/jsm/Addons.js'
-import { CircularProgress } from '@nextui-org/react'
 import Container from './Container'
 
 const Animation3D = () => {

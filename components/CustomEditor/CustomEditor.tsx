@@ -1,9 +1,17 @@
 'use client'
 import myAxios from '@/services/apiClient'
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import Editor from 'ckeditor5-custom-build'
-import { FC, memo, useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { FC, memo, useEffect, useRef, useState } from 'react'
+import LoadOverScreen from '../load/LoadOverScreen'
 import './CustomEditor.css'
+
+const CKEditor = dynamic(
+	async () => (await import('@ckeditor/ckeditor5-react')).CKEditor,
+	{
+		loading: () => <LoadOverScreen />,
+		ssr: false,
+	}
+)
 
 class MyUploadAdapter {
 	constructor(public loader: any) {
@@ -31,27 +39,34 @@ const MyCustomUploadAdapterPlugin = function (editor: any) {
 
 const CustomEditor: FC<{ value?: string; onChange?(value: string): void }> =
 	function ({ onChange, value }) {
+		const EditorRef = useRef<any>()
+		useEffect(() => {
+			EditorRef.current = require('ckeditor5-custom-build')
+		}, [])
+
 		const [data, setData] = useState<string>('')
 		useEffect(() => {
 			setData(value || '')
 		}, [value])
 
 		return (
-			<CKEditor
-				editor={Editor}
-				config={{
-					extraPlugins: [MyCustomUploadAdapterPlugin],
-					toolbar: {
-						shouldNotGroupWhenFull: true,
-					},
-				}}
-				data={data}
-				onChange={(event, editor) => {
-					const data = editor.getData()
-					setData(data)
-					if (onChange) onChange(data)
-				}}
-			/>
+			EditorRef.current && (
+				<CKEditor
+					editor={EditorRef.current}
+					config={{
+						extraPlugins: [MyCustomUploadAdapterPlugin],
+						toolbar: {
+							shouldNotGroupWhenFull: true,
+						},
+					}}
+					data={data}
+					onChange={(event: any, editor: any) => {
+						const data = editor.getData()
+						setData(data)
+						if (onChange) onChange(data)
+					}}
+				/>
+			)
 		)
 	}
 export default memo(CustomEditor)

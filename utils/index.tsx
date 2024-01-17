@@ -90,3 +90,15 @@ export const findAndReplace = <T = any,>(
 		}
 	}
 }
+
+export const findAndDelete = <T = any,>(
+	array: T[],
+	fn: (item: T) => boolean
+) => {
+	for (let index = 0; index < array.length; index++) {
+		if (fn(array[index])) {
+			array.splice(index, 1)
+			break
+		}
+	}
+}

@@ -3,21 +3,35 @@ import Container from '@/components/Container'
 import RelatedArticles from '@/components/posts/RelatedArticles'
 import { IPostResponse } from '@/models/Post'
 import myAxios from '@/services/apiClient'
-import { Image } from '@nextui-org/react'
+import { CircularProgress, Image } from '@nextui-org/react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { GoChevronRight } from 'react-icons/go'
 
-import '@/styles/ck-editor.scss'
 import '@/components/CustomEditor/CustomEditor.css'
+import { useLoad } from '@/services/apiHandler'
+import '@/styles/ck-editor.scss'
 
 const page = ({ params }: { params: { id: string } }) => {
 	const [data, setData] = useState<IPostResponse | null>(null)
-	useEffect(() => {
+
+	const { loading, handler: getData } = useLoad(async () => {
 		myAxios.get(`/posts/${params.id}`).then(({ data }) => {
 			setData(data)
 		})
+	})
+
+	useEffect(() => {
+		getData()
 	}, [])
+
+	if (loading) {
+		return (
+			<div className="py-10 flex justify-center">
+				<CircularProgress color="warning" />
+			</div>
+		)
+	}
 
 	return (
 		data && (

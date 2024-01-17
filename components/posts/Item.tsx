@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 import { FaTrash } from 'react-icons/fa'
 import { MdEdit } from 'react-icons/md'
+import CustomLink from '../CustomLink'
 
 interface Props {
 	data: IPostResponse
@@ -14,7 +15,7 @@ interface Props {
 const PostItem: FC<Props> = ({ data, onActiveDelete }) => {
 	return (
 		<div className="relative group">
-			<Link href={`/posts/id/${data._id}`}>
+			<Link href={`posts/id/${data._id}`}>
 				<Image
 					src={data.thumbnail}
 					alt=""
@@ -25,17 +26,16 @@ const PostItem: FC<Props> = ({ data, onActiveDelete }) => {
 
 			<CheckAuthWrapper>
 				<div className="flex items-center absolute top-1 right-1 z-10 opacity-0 group-hover:opacity-100">
-					<Link href={`/posts/update/${data._id}`}>
-						<Button
-							isIconOnly
-							disableRipple
-							className="text-[1.23rem] min-w-0 px-0 ms-2"
-							size="sm"
-							variant="solid"
-						>
-							<MdEdit />
-						</Button>
-					</Link>
+					<CustomLink
+						link={`/posts/update/${data._id}`}
+						isIconOnly
+						disableRipple
+						className="text-[1.23rem] min-w-0 px-0 ms-2"
+						size="sm"
+						variant="solid"
+					>
+						<MdEdit />
+					</CustomLink>
 
 					<Button
 						isIconOnly

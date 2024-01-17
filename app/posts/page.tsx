@@ -1,5 +1,6 @@
 'use client'
 import Container from '@/components/Container'
+import CustomLink from '@/components/CustomLink'
 import Banner from '@/components/posts/Banner'
 import PostItem from '@/components/posts/Item'
 import { IPostResponse } from '@/models/Post'
@@ -17,7 +18,6 @@ import {
 	ModalHeader,
 	useDisclosure,
 } from '@nextui-org/react'
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -94,11 +94,9 @@ const page = () => {
 			<Banner />
 			<CheckAuthWrapper>
 				<div className="flex justify-center pt-8">
-					<Link href="/posts/create">
-						<Button className="font-medium" color="success">
-							Add Post
-						</Button>
-					</Link>
+					<CustomLink color="success" link="/posts/create">
+						Create
+					</CustomLink>
 				</div>
 			</CheckAuthWrapper>
 

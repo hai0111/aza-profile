@@ -56,7 +56,6 @@ const NavbarHeader = () => {
 					{navList.map((item) => (
 						<Link
 							href={item.link}
-							key={item.link}
 							className="p-2 inline-flex items-center gap-1 hover:underline underline-offset-2"
 						>
 							{item.icon}

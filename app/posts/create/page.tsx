@@ -1,6 +1,7 @@
 'use client'
 import Container from '@/components/Container'
 import CustomEditor from '@/components/CustomEditor'
+import CustomLink from '@/components/CustomLink'
 import MultipleAutoComplete from '@/components/MultipleAutoComplete'
 import Banner from '@/components/posts/Banner'
 import UploadFile from '@/components/upload/UploadFile'
@@ -9,7 +10,6 @@ import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
 import { Button, Input } from '@nextui-org/react'
 import { useFormik } from 'formik'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -135,9 +135,9 @@ const page = () => {
 				</div>
 
 				<div className="flex justify-end mt-10 gap-2">
-					<Link href={'/posts'}>
-						<Button size="lg">Back to Posts</Button>
-					</Link>
+					<CustomLink size="lg" link={'/posts'}>
+						Back to Posts
+					</CustomLink>
 					<Button
 						size="lg"
 						className="font-medium"

@@ -1,6 +1,7 @@
 'use client'
 import Container from '@/components/Container'
 import CustomEditor from '@/components/CustomEditor'
+import CustomLink from '@/components/CustomLink'
 import MultipleAutoComplete from '@/components/MultipleAutoComplete'
 import Banner from '@/components/posts/Banner'
 import UploadFile from '@/components/upload/UploadFile'
@@ -9,6 +10,7 @@ import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
 import {
 	Button,
+	CircularProgress,
 	Input,
 	Modal,
 	ModalBody,
@@ -18,7 +20,6 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import { useFormik } from 'formik'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -102,11 +103,14 @@ const page = ({ params }: { params: { id: string } }) => {
 
 	// Initialize update data
 	const idRef = useRef<string>()
-	useEffect(() => {
+	const { loading: loadData, handler: getData } = useLoad(async () => {
 		myAxios.get(`/posts/${params.id}`).then(({ data }) => {
 			formik.setValues(data)
 			idRef.current = data._id
 		})
+	})
+	useEffect(() => {
+		getData()
 	}, [])
 
 	// Delete controller
@@ -132,6 +136,14 @@ const page = ({ params }: { params: { id: string } }) => {
 			}
 		}
 	)
+
+	if (loadData) {
+		return (
+			<div className="py-10 flex justify-center">
+				<CircularProgress color="warning" />
+			</div>
+		)
+	}
 
 	return (
 		<>
@@ -186,9 +198,9 @@ const page = ({ params }: { params: { id: string } }) => {
 				</div>
 
 				<div className="flex justify-end mt-10 gap-2">
-					<Link href={'/posts'}>
-						<Button size="lg">Back to Posts</Button>
-					</Link>
+					<CustomLink size="lg" link={'/posts'}>
+						Back to Posts
+					</CustomLink>
 					<Button size="lg" color="danger" onClick={onOpen}>
 						Delete
 					</Button>

@@ -18,7 +18,7 @@ const PostItem: FC<Props> = ({ data, onActiveDelete }) => {
 				<Image
 					src={data.thumbnail}
 					alt=""
-					className="rounded aspect-video min-h-[200px]"
+					className="rounded aspect-video min-h-[200px] object-cover"
 				/>
 				<div className="text-center pt-1">{data.title}</div>
 			</Link>

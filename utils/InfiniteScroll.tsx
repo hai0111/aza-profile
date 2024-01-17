@@ -1,5 +1,6 @@
 'use client'
 import { useLoad } from '@/services/apiHandler'
+import { CircularProgress } from '@nextui-org/react'
 import clsx from 'clsx'
 import {
 	ForwardRefExoticComponent,
@@ -67,7 +68,7 @@ const InfiniteScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 					{children}
 					{(loading || loadingProp) && (
 						<div className="flex justify-center py-3 animate-expand-y">
-							{loadEl}
+							<CircularProgress color="warning" aria-label="Loading..." />
 						</div>
 					)}
 				</div>

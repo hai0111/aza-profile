@@ -102,6 +102,7 @@ const DiaryItem: FC<Props> = ({
 						<CircularProgress
 							ref={refLoad}
 							size="sm"
+							color="warning"
 							aria-label="Loading..."
 							className="me-3"
 							classNames={{

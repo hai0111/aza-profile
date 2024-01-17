@@ -107,6 +107,7 @@ const page = () => {
 				className="max-h-[1000px]"
 				loadMore={getData}
 				ref={refScroll}
+				loading={loading}
 			>
 				<Container className="pt-10 grid grid-cols-2 gap-3">
 					{items.map((item) => (

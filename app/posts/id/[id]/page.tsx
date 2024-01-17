@@ -40,7 +40,9 @@ const page = ({ params }: { params: { id: string } }) => {
 						dangerouslySetInnerHTML={{ __html: data.content }}
 					/>
 				</div>
-				<RelatedArticles items={data.postsRelated} />
+				{data.postsRelated?.length && (
+					<RelatedArticles items={data.postsRelated} />
+				)}
 			</Container>
 		)
 	)

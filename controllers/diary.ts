@@ -14,19 +14,19 @@ class DiaryController {
 
 	async update(id: string, data: any) {
 		try {
-			const dialy = await this.findById(id)
-			if (dialy) {
+			const diary = await this.findById(id)
+			if (diary) {
 				for (const key in data) {
-					if (typeof data[key] === typeof dialy[key as keyof Document])
-						dialy[key as keyof Document] = data[key]
+					if (typeof data[key] === typeof diary[key as keyof Document])
+						diary[key as keyof Document] = data[key]
 				}
-				return await dialy.save()
+				return await diary.save()
 			} else {
-				throw 'Dialy not found'
+				throw 'Diary not found'
 			}
 		} catch (error) {
 			// throw error
-		} 
+		}
 	}
 
 	async totalRecords() {
@@ -34,7 +34,7 @@ class DiaryController {
 	}
 
 	async list({
-		fromDate, 
+		fromDate,
 		toDate,
 		size = 20,
 		index = 1,

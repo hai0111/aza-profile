@@ -8,6 +8,7 @@ import {
 	UIEvent,
 	forwardRef,
 	useCallback,
+	useEffect,
 	useImperativeHandle,
 	useRef,
 } from 'react'
@@ -18,12 +19,20 @@ interface Props {
 	children: ReactNode
 	loadEl?: ReactNode
 	allowScroll: boolean
+	loading?: boolean
 }
 
 const InfiniteScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 	forwardRef(
 		(
-			{ loadMore, children, className, allowScroll, loadEl = 'Loading...' },
+			{
+				loadMore,
+				children,
+				className,
+				allowScroll,
+				loadEl = 'Loading...',
+				loading: loadingProp,
+			},
 			ref
 		) => {
 			const refScrollBox = useRef<HTMLDivElement>(null)
@@ -33,8 +42,8 @@ const InfiniteScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 				const { scrollTop, offsetHeight, scrollHeight } = e.currentTarget
 				const checkPosition = scrollTop + offsetHeight > scrollHeight - 50
 				const isDown = scrollTop > lastScroll.current
-				const shouldScorll = allowScroll && checkPosition && isDown && !loading
-				if (shouldScorll) loadMoreHandler()
+				const shouldScroll = allowScroll && checkPosition && isDown && !loading
+				if (shouldScroll) loadMoreHandler()
 				lastScroll.current = scrollTop
 			}
 
@@ -56,7 +65,7 @@ const InfiniteScroll: ForwardRefExoticComponent<Props & RefAttributes<any>> =
 					onScroll={handleScroll}
 				>
 					{children}
-					{loading && (
+					{(loading || loadingProp) && (
 						<div className="flex justify-center py-3 animate-expand-y">
 							{loadEl}
 						</div>

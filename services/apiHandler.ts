@@ -9,9 +9,9 @@ const useLoad = <T = any>(
 		loading,
 		setLoading,
 		handler: async (...p: any) => {
-			setLoading(true)
+			setLoading(() => true)
 			await apiHandler(() => fn(...p), errorHandler)
-			setLoading(false)
+			setLoading(() => false)
 		},
 	}
 }

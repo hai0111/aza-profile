@@ -147,6 +147,7 @@ const Diary = () => {
 			<InfiniteScroll
 				allowScroll={allowLoadMore.current}
 				className="max-h-[600px]"
+				loading={loading}
 				loadMore={getData}
 				ref={refScroll}
 			>

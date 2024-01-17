@@ -13,6 +13,9 @@
 		translate(0, calc(var(--translation) * 1%));
 	animation: spinner-fzua35 1s calc(var(--delay) * 1s) infinite ease;
 }
+[class*='dark'] .spinner div {
+	background: #ffffffeb;
+}
 
 .spinner div:nth-child(1) {
 	--delay: 0.1;

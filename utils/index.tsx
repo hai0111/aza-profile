@@ -2,6 +2,7 @@ import myAxios from '@/services/apiClient'
 import moment from 'moment'
 import { getServerSession } from 'next-auth'
 import { NextRequest } from 'next/server'
+import { KeyboardEventHandler } from 'react'
 
 export const getQuery = (request: NextRequest) => {
 	const { searchParams } = request.nextUrl
@@ -53,6 +54,12 @@ export const toSlug = (str: string) => {
 
 	// return
 	return str
+}
+
+export const onKeyEnter: (
+	fn: Function
+) => KeyboardEventHandler<HTMLInputElement> = (fn) => (event) => {
+	if (event.key === 'Enter') fn()
 }
 
 export const findAndToggle = <T = any,>(

@@ -21,8 +21,8 @@ const PostItem: FC<Props> = ({ data, onActiveDelete }) => {
 					alt=""
 					className="rounded aspect-video min-h-[200px] object-cover"
 				/>
-				<div className="text-center pt-1">{data.title}</div>
 			</Link>
+			<div className="text-center pt-1">{data.title}</div>
 
 			<CheckAuthWrapper>
 				<div className="flex items-center absolute top-1 right-1 z-10 opacity-0 group-hover:opacity-100">

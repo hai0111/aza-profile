@@ -43,7 +43,7 @@ const TypingAnimation: FC<Props> = ({ texts }) => {
 	}, [textContainer])
 
 	return (
-		<div>
+		<div className="bg-white bg-opacity-70 p-5 rounded-xl dark:bg-transparent">
 			<span ref={textContainer}></span>
 			<span className="animate-blink ms-1">_</span>
 		</div>

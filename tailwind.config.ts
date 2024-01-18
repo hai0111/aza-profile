@@ -36,14 +36,14 @@ const config: Config = {
 				},
 				'blink-text': {
 					'0%': {
-						textShadow: '0 0 5px #fff, 0 0 10px #fff',
+						textShadow: '0 0 5px var(--text-color), 0 0 10px var(--text-color)',
 					},
 					'50%': {
 						textShadow:
-							'0 0 5px #fff, 0 0 10px #fff, 0 0 13px #fff, 0 0 18px #fff',
+							'0 0 5px var(--text-color), 0 0 10px var(--text-color), 0 0 13px var(--text-color), 0 0 18px var(--text-color)',
 					},
 					'100%': {
-						textShadow: '0 0 5px #fff, 0 0 10px #fff',
+						textShadow: '0 0 5px var(--text-color), 0 0 10px var(--text-color)',
 					},
 				},
 			},

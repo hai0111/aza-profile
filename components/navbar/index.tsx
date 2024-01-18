@@ -16,6 +16,7 @@ import {
 import { SessionContext } from '@/utils/session'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
+import { ThemeContext } from '@/utils/theme'
 
 interface INavLink {
 	text: string
@@ -51,9 +52,8 @@ const NavbarHeader = () => {
 	}, [])
 
 	const pathName = usePathname()
-	useEffect(() => {
-		console.log(pathName)
-	}, [pathName])
+
+	const { theme } = useContext(ThemeContext)
 
 	const checkNavActive = (link: string) =>
 		pathName.match(/\/\w+/)?.[0] === link.match(/\/\w+/)?.[0]
@@ -69,9 +69,11 @@ const NavbarHeader = () => {
 							className={clsx(
 								'py-2 px-4 inline-flex items-center gap-1 hover:underline underline-offset-2 rounded transition-all duration-250 text-center',
 								{
-									'animate-blink-text font-bold tracking-wider': checkNavActive(
-										item.link
-									),
+									'animate-blink-text font-bold tracking-wider text-white':
+										checkNavActive(item.link) && theme !== 'light',
+									'bg-primary text-white transition':
+										checkNavActive(item.link) && theme === 'light',
+									'hover:no-underline': checkNavActive(item.link),
 								}
 							)}
 							key={item.link + 'pc'}

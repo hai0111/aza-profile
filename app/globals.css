@@ -13,11 +13,13 @@
 html {
 	--toastify-color-light: #fff;
 	--toastify-text-color-light: #757575;
+	--text-color: rgb(32 32 35);
 }
 
 html:is(.dark) {
 	--toastify-color-light: #121212;
 	--toastify-text-color-light: #fff;
+	--text-color: #ffffffeb;
 }
 
 button,

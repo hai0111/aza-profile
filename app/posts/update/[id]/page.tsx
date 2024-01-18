@@ -101,18 +101,6 @@ const page = ({ params }: { params: { id: string } }) => {
 		formik.setFieldValue('thumbnail', val)
 	}
 
-	// Initialize update data
-	const idRef = useRef<string>()
-	const { loading: loadData, handler: getData } = useLoad(async () => {
-		myAxios.get(`/posts/${params.id}`).then(({ data }) => {
-			formik.setValues(data)
-			idRef.current = data._id
-		})
-	})
-	useEffect(() => {
-		getData()
-	}, [])
-
 	// Delete controller
 	const {
 		isOpen: isOpenDelete,
@@ -136,6 +124,17 @@ const page = ({ params }: { params: { id: string } }) => {
 			}
 		}
 	)
+
+	// Initialize update data
+	const idRef = useRef<string>()
+	const { loading: loadData, handler: getData } = useLoad(async () => {
+		const { data } = await myAxios.get(`/posts/${params.id}`)
+		formik.setValues(data)
+		idRef.current = data._id
+	})
+	useEffect(() => {
+		getData()
+	}, [])
 
 	if (loadData) {
 		return (

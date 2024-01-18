@@ -34,10 +34,23 @@ const config: Config = {
 					'50%': { opacity: '0' },
 					'100': { opacity: '1' },
 				},
+				'blink-text': {
+					'0%': {
+						textShadow: '0 0 5px #fff, 0 0 10px #fff',
+					},
+					'50%': {
+						textShadow:
+							'0 0 5px #fff, 0 0 10px #fff, 0 0 13px #fff, 0 0 18px #fff',
+					},
+					'100%': {
+						textShadow: '0 0 5px #fff, 0 0 10px #fff',
+					},
+				},
 			},
 			animation: {
 				'expand-y': 'expand-y 1s ease-in-out',
 				blink: 'blink 800ms ease infinite',
+				'blink-text': 'blink-text 1000ms linear infinite',
 			},
 		},
 	},

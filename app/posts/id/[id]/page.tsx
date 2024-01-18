@@ -27,7 +27,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
 	if (loading) {
 		return (
-			<div className="py-10 flex justify-center">
+			<div className="pb-10 pt-60 flex justify-center">
 				<CircularProgress color="warning" />
 			</div>
 		)

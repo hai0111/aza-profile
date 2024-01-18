@@ -1,5 +1,4 @@
 import styles from '@/components/upload/styles.module.scss'
-import myAxios from '@/services/apiClient'
 import { useLoad } from '@/services/apiHandler'
 import { uploadFile } from '@/utils'
 import { Button, Input } from '@nextui-org/react'
@@ -14,7 +13,20 @@ interface Props {
 }
 
 const UploadFile: FC<Props> = ({ onValueChange, value: valueProp }) => {
-	const [value, setValue] = useState<string>('')
+	let value: string
+	let setValue: any = onValueChange
+
+	if (typeof valueProp === 'string') {
+		value = valueProp
+	} else {
+		const state = useState<string>('')
+		value = state[0]
+		setValue = state[1]
+		useEffect(() => {
+			onValueChange && onValueChange(value)
+		}, [value])
+	}
+
 	const inputRef = useRef<HTMLInputElement>(null)
 	const clickUpload = () => {
 		inputRef.current?.click()
@@ -47,14 +59,6 @@ const UploadFile: FC<Props> = ({ onValueChange, value: valueProp }) => {
 	const handleClear = () => {
 		setValue('')
 	}
-
-	useEffect(() => {
-		onValueChange && onValueChange(value)
-	}, [value])
-
-	useEffect(() => {
-		setValue(valueProp || '')
-	}, [valueProp])
 
 	return (
 		<>

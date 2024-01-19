@@ -16,7 +16,7 @@ const page = ({ params }: { params: { id: string } }) => {
 	const [data, setData] = useState<IPostResponse | null>(null)
 
 	const { loading, handler: getData } = useLoad(async () => {
-		myAxios.get(`/posts/${params.id}`).then(({ data }) => {
+		await myAxios.get(`/posts/${params.id}`).then(({ data }) => {
 			setData(data)
 		})
 	})

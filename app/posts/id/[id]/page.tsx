@@ -37,6 +37,9 @@ const page = ({ params }: { params: { id: string } }) => {
 		data && (
 			<Container className="pt-16">
 				<Image
+					classNames={{
+						wrapper: 'grow max-w-[unset!important]',
+					}}
 					className="aspect-[9/5] object-cover w-full"
 					src={data.thumbnail}
 					alt=""

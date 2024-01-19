@@ -8,8 +8,8 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { GoChevronRight } from 'react-icons/go'
 
-import '@/components/CustomEditor/CustomEditor.scss'
 import { useLoad } from '@/services/apiHandler'
+import '@/components/CustomEditor/CustomEditor.scss'
 import '@/styles/ck-editor.scss'
 
 const page = ({ params }: { params: { id: string } }) => {

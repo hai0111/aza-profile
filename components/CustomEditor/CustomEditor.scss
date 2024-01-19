@@ -42,12 +42,16 @@
 		min-height: 300px;
 		background-color: inherit !important;
 
-		ul {
-			padding-left: 26px !important;
-		}
-
 		.ck-powered-by {
 			display: none !important;
+		}
+	}
+}
+
+:is(.ck.ck-editor, .ck.ck-editor__main) {
+	.ck-content {
+		ul {
+			padding-left: 26px !important;
 		}
 
 		pre {
@@ -70,11 +74,6 @@
 					color: var(--text-color) !important;
 					-webkit-text-fill-color: var(--text-color) !important;
 				}
-			}
-
-			.ck-button {
-				background-color: inherit !important;
-				border: none;
 			}
 		}
 	}

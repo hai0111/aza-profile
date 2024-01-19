@@ -90,7 +90,6 @@ const page = () => {
 	return (
 		<>
 			<Banner />
-			{formik.values.content}
 			<Container className="pt-4">
 				<Input
 					name="title"

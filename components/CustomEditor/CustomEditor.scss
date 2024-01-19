@@ -13,9 +13,16 @@
 		box-shadow: none !important;
 	}
 
+	.ck-sticky-panel__content {
+		top: 58px !important;
+	}
+
 	.ck-toolbar {
 		border: none !important;
-		background-color: inherit !important;
+		background-color: hsl(
+			var(--nextui-default-100) /
+				var(--nextui-default-100-opacity, var(--tw-bg-opacity))
+		) !important;
 
 		.ck-button:not(.ck-color-grid__tile) {
 			background-color: inherit !important;

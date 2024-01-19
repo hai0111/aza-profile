@@ -3,7 +3,7 @@ import myAxios from '@/services/apiClient'
 import dynamic from 'next/dynamic'
 import { FC, memo, useEffect, useRef, useState } from 'react'
 import LoadOverScreen from '../load/LoadOverScreen'
-import './CustomEditor.css'
+import './CustomEditor.scss'
 
 const CKEditor = dynamic(
 	async () => (await import('@ckeditor/ckeditor5-react')).CKEditor,

@@ -1,0 +1,70 @@
+.ck.ck-editor {
+	border-radius: var(--nextui-radius-medium);
+	overflow: hidden;
+	color: inherit !important;
+	background-color: hsl(
+		var(--nextui-default-100) /
+			var(--nextui-default-100-opacity, var(--tw-bg-opacity))
+	) !important;
+
+	*:focus,
+	*:active {
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	.ck-toolbar {
+		border: none !important;
+		background-color: inherit !important;
+
+		.ck-button:not(.ck-color-grid__tile) {
+			background-color: inherit !important;
+			color: var(--text-color) !important;
+		}
+
+		.ck-dropdown__panel {
+			background-color: hsl(
+				var(--nextui-default-100) /
+					var(--nextui-default-100-opacity, var(--tw-bg-opacity))
+			) !important;
+		}
+	}
+
+	.ck-content {
+		border: none !important;
+		min-height: 300px;
+		background-color: inherit !important;
+
+		ul {
+			padding-left: 26px !important;
+		}
+
+		.ck-powered-by {
+			display: none !important;
+		}
+
+		pre {
+			color: var(--text-color) !important;
+		}
+
+		a {
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+		hr {
+			height: 1px;
+		}
+
+		.raw-html-embed {
+			background: hsla(0, 0%, 78%, 0.3);
+			textarea {
+				background: hsla(0, 0%, 78%, 0.3);
+			}
+
+			.ck-button {
+				background-color: inherit !important;
+				border: none;
+			}
+		}
+	}
+}

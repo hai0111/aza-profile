@@ -15,7 +15,7 @@ export interface IPostResponse extends Omit<IPostComplete, 'postsRelated'> {
 	_id: string
 	createAt: string
 	updateAt: string
-	postsRelated: IPostResponse[] 
+	postsRelated: IPostResponse[]
 }
 
 interface IPostSchema extends Schema, IPostComplete {}
@@ -46,6 +46,8 @@ const PostSchema = new Schema<IPostSchema>(
 		timestamps: true,
 	}
 )
+
+mongoose.deleteModel('Post')
 
 const PostModel =
 	mongoose.models.Post || mongoose.model<IPostSchema>('Post', PostSchema)

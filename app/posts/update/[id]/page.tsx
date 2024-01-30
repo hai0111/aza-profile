@@ -42,7 +42,7 @@ const page = ({ params }: { params: { id: string } }) => {
 				...values,
 				slug: toSlug(values.title),
 			}
-			await myAxios.put(`/posts/${idRef.current}`, { body, postsRelated })
+			await myAxios.put(`/posts/${idRef.current}`, { ...body, postsRelated })
 			toast('Successfully', {
 				type: 'success',
 			})

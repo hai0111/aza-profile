@@ -47,8 +47,6 @@ const PostSchema = new Schema<IPostSchema>(
 	}
 )
 
-mongoose.deleteModel('Post')
-
 const PostModel =
 	mongoose.models.Post || mongoose.model<IPostSchema>('Post', PostSchema)
 

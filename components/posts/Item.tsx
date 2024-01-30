@@ -15,7 +15,7 @@ interface Props {
 const PostItem: FC<Props> = ({ data, onActiveDelete }) => {
 	return (
 		<div className="relative group">
-			<Link href={`posts/id/${data._id}`}>
+			<Link href={`/posts/id/${data._id}`}>
 				<Image
 					src={data.thumbnail}
 					alt=""

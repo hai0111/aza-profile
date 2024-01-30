@@ -5,9 +5,10 @@ import CustomLink from '@/components/CustomLink'
 import MultipleAutoComplete from '@/components/MultipleAutoComplete'
 import Banner from '@/components/posts/Banner'
 import UploadFile from '@/components/upload/UploadFile'
-import { IPost, IPostResponse } from '@/models/Post'
+import { IPost, IPostComplete, IPostResponse } from '@/models/Post'
 import myAxios from '@/services/apiClient'
 import { apiHandler, useLoad } from '@/services/apiHandler'
+import { toSlug } from '@/utils'
 import {
 	Button,
 	CircularProgress,
@@ -37,8 +38,11 @@ const page = ({ params }: { params: { id: string } }) => {
 	const { loading, handler: onSubmit } = useLoad(
 		async (values: IPost) => {
 			const postsRelated = (values.postsRelated as any[])?.map(({ _id }) => _id)
-			values.postsRelated = postsRelated
-			await myAxios.put(`/posts/${idRef.current}`, { ...values, postsRelated })
+			const body: IPostComplete = {
+				...values,
+				slug: toSlug(values.title),
+			}
+			await myAxios.put(`/posts/${idRef.current}`, { body, postsRelated })
 			toast('Successfully', {
 				type: 'success',
 			})

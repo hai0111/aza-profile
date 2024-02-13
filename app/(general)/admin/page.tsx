@@ -6,6 +6,7 @@ import { Button, Input } from '@nextui-org/react'
 import { useFormik } from 'formik'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
 const page = () => {
@@ -19,8 +20,15 @@ const page = () => {
 		formik.setTouched({ password: true, username: true })
 		const res = await signIn('credentials', { ...values, redirect: false })
 		if (res?.ok) {
+			toast('Login successful!', {
+				type: 'success',
+			})
 			router.back()
 			router.refresh()
+		} else {
+			toast('Account or password is incorrect', {
+				type: 'warning',
+			})
 		}
 	})
 

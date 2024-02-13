@@ -98,7 +98,7 @@ const NavbarHeader = () => {
 						</Button>
 					</DropdownTrigger>
 					<DropdownMenu aria-label="Dynamic Actions">
-						{navLinks.map((item) => (
+						{navList.map((item) => (
 							<DropdownItem
 								textValue={item.text}
 								href={item.link}
